@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_navigation"
+    app:startDestination="@id/navigation_review">
+
+    <fragment
+        android:id="@+id/navigation_review"
+        android:name="ua.sviatkuzbyt.newsnow.ui.review.ReviewFragment"
+        android:label="@string/review"
+        tools:layout="@layout/fragment_review" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="ua.sviatkuzbyt.newsnow.ui.search.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/navigation_saved"
+        android:name="ua.sviatkuzbyt.newsnow.ui.saved.SavedFragment"
+        android:label="@string/saved"
+        tools:layout="@layout/fragment_saved" />
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="ua.sviatkuzbyt.newsnow.ui.SettingFragment"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
