@@ -1,7 +1,5 @@
 package ua.sviatkuzbyt.newsnow
 
-import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
@@ -15,6 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val bottomNavigator = findViewById<BottomNavigationView>(R.id.bottom_navigator)
+        val mainToolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.mainToolbar)
+        setSupportActionBar(mainToolbar)
 
         val navController = findNavController(R.id.nav_fragments)
         val appBarConfiguration = AppBarConfiguration(setOf(
