@@ -14,8 +14,10 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     private var _list = mutableListOf<NewsContainer>()
     val list = MutableLiveData<List<NewsContainer>>(_list)
     var newElements = 0
-    var page = 0
+    private var page = 0
+    var oldSize = 0
     var isUpdated = false
+    val error = MutableLiveData<Boolean>()
 
     init {
         firstUpdate()
@@ -24,25 +26,27 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     fun firstUpdate(){
         viewModelScope.launch(Dispatchers.IO){
             val lastNews = repository.getRecentlyNews(0)
-            _list.clear()
-            _list.addAll(lastNews)
-//            list.postValue().addAll(lastNews)
-            list.postValue(_list)
-
-            page = 1
-            newElements = lastNews.size
+            if (lastNews != null){
+                oldSize = _list.size
+                _list.clear()
+                _list.addAll(lastNews)
+                list.postValue(_list)
+                page = 1
+                newElements = lastNews.size
+            } else error.postValue(true)
         }
     }
-
-
 
     fun update(){
         viewModelScope.launch(Dispatchers.IO){
             val lastNews = repository.getRecentlyNews(page)
-            _list.addAll(lastNews)
-            list.postValue(_list)
-            page ++
-            newElements = lastNews.size
+            if (lastNews != null){
+                _list.addAll(lastNews)
+                list.postValue(_list)
+                page ++
+                newElements = lastNews.size
+            }
+            else error.postValue(true)
         }
     }
 

@@ -67,9 +67,6 @@ class NewsRecycleViewAdapter(private val dataSet: List<NewsContainer>, private v
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-
-
-
         if (dataSet[position].image != null) viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
         viewHolder.sourceNewsTextView.text = dataSet[position].source
         viewHolder.labelNewsTextView.text = dataSet[position].label

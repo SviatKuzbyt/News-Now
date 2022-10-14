@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,5 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigator.setupWithNavController(navController)
+
+    }
+    fun makeToast(text: String, long: Boolean){
+        val toastLong = if(long) Toast.LENGTH_LONG
+                        else Toast.LENGTH_SHORT
+        Toast.makeText(this, text, toastLong).show()
     }
 }
