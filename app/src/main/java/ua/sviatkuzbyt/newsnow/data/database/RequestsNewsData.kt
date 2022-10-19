@@ -10,10 +10,13 @@ interface RequestsNewsData {
     @Insert
     fun addSaveNews(news: SavedNewsEntity)
 
-//    @Delete
-//    fun deleteSaveNews(news: SavedNewsEntity)
-//
-//    @Query("SELECT * FROM savednews")
-//    fun getSavedNews(): SavedNewsEntity
+    @Query("DELETE FROM savednews WHERE (((savednews.link)=:news))")
+    fun deleteSaveNews(news: String)
+
+    @Query("SELECT * FROM savednews")
+    fun getSavedNews(): MutableList<SavedNewsEntity>
+
+    @Query("SELECT COUNT(*) FROM savednews WHERE link IN (:news)")
+    fun isSaved(news: String): Boolean
 
 }

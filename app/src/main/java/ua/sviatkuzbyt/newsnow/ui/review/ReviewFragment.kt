@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.ui.elements.NewsRecycleViewAdapter
+import ua.sviatkuzbyt.newsnow.ui.elements.ReviewAdapter
 
 class ReviewFragment : Fragment() {
 
@@ -55,7 +55,7 @@ class ReviewFragment : Fragment() {
         val recycleViewReview = view.findViewById<RecyclerView>(R.id.recycleViewReview)
         recycleViewReview.layoutManager = LinearLayoutManager(activity)
         //Set adapter
-        val adapter = NewsRecycleViewAdapter(viewModel.list.value!!, requireActivity())
+        val adapter = ReviewAdapter(viewModel.list.value!!, requireActivity(), viewModel)
         recycleViewReview.adapter = adapter
 
         //set loading new news, when list is scrolled down
@@ -80,6 +80,7 @@ class ReviewFragment : Fragment() {
             if (it.isNotEmpty()){
                 //when we call update info
                 if(refreshReview.isRefreshing){
+                    Log.v("СУКАЮЛЯТЬ", "refreshReview.isRefreshing")
                     //update view list
                     adapter.notifyItemRangeRemoved(0, viewModel.oldSize)
                     adapter.notifyItemRangeInserted(0, viewModel.newElements)
@@ -87,6 +88,7 @@ class ReviewFragment : Fragment() {
                 }
                 else{
                     //update view list
+                    Log.v("СУКАЮЛЯТЬ", "else")
                     adapter.notifyItemRangeInserted(it.size - viewModel.newElements, viewModel.newElements)
 
                     //hide progress more
@@ -118,5 +120,6 @@ class ReviewFragment : Fragment() {
                 viewModel.error.value = false
             }
         }
+
     }
 }

@@ -7,40 +7,20 @@
     android:paddingTop="16dp"
     android:paddingHorizontal="16dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewRecycle"
-        android:layout_width="0dp"
-        android:layout_height="192dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageNewsRecycle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/no_image" />
-
-    </androidx.cardview.widget.CardView>
-
     <TextView
         android:id="@+id/sourceNewsRecycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/inter"
         android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewRecycle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/labelNewsRecycle"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
         android:minHeight="75dp"
         android:textColor="@color/black"
@@ -65,7 +45,7 @@
         android:layout_width="48dp"
         android:layout_height="32dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_saved_gray"
+        android:background="@drawable/ic_saved_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelNewsRecycle"
         tools:ignore="SpeakableTextPresentCheck" />

@@ -7,10 +7,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import ua.sviatkuzbyt.newsnow.data.database.DataRepository
+import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
+import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
 import ua.sviatkuzbyt.newsnow.data.repositories.ReviewRepository
 
 class ReviewViewModel(application: Application): AndroidViewModel(application) {
-    private val repository = ReviewRepository()
+    private val repository: ReviewRepository
+    private val dataRepository: DataRepository
     private var _list = mutableListOf<NewsContainer>()
     val list = MutableLiveData<List<NewsContainer>>(_list)
     var newElements = 0
@@ -20,6 +24,9 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     val error = MutableLiveData<Boolean>()
 
     init {
+        val data = SaveNewsDataBase.getDatabase(application).request()
+        dataRepository = DataRepository(data)
+        repository = ReviewRepository(data)
         firstUpdate()
     }
 
@@ -50,4 +57,17 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun addSavedNews(item: NewsContainer, updateSaved: Int){
+        viewModelScope.launch(Dispatchers.IO){
+            dataRepository.addSavedNews(item)
+            _list[updateSaved].isSaved = true
+        }
+    }
+
+    fun removeSavedNews(item: String, updateSaved: Int){
+        viewModelScope.launch(Dispatchers.IO){
+            dataRepository.removeSavedNews(item)
+            _list[updateSaved].isSaved = false
+        }
+    }
 }

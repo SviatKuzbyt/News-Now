@@ -7,11 +7,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import ua.sviatkuzbyt.newsnow.MainActivity
+import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReviewLoad(country: String) {
+class ReviewLoad(country: String, private val request: RequestsNewsData) {
     private val url = "https://newsdata.io/api/1/news?" +
             "apikey=pub_1228749eee196a77f494bc549964a1cd5318c" +
             "&country=$country"
@@ -34,7 +35,7 @@ class ReviewLoad(country: String) {
                         jsonObject.getString("title"),
                         jsonObject.getString("source_id"),
                         df.format(date).subSequence(5, 16).toString(),
-                        false,
+                        request.isSaved(jsonObject.getString("link")),
                         loadImage(jsonObject.getString("image_url")),
                         jsonObject.getString("link")
                     )

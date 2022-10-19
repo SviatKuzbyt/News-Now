@@ -6,7 +6,7 @@ data class NewsContainer(
     val label: String,
     val source: String,
     val time: String,
-    val isSaved: Boolean,
+    var isSaved: Boolean,
     val image: Bitmap?,
-    val link: String
+    val link: String,
 )
