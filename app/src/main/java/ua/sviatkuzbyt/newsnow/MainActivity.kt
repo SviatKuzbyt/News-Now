@@ -24,14 +24,10 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_saved,
             R.id.navigation_setting
         ))
+        navController
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigator.setupWithNavController(navController)
 
-    }
-    fun makeToast(text: String, long: Boolean){
-        val toastLong = if(long) Toast.LENGTH_LONG
-                        else Toast.LENGTH_SHORT
-        Toast.makeText(this, text, toastLong).show()
     }
 }

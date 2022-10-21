@@ -2,50 +2,61 @@ package ua.sviatkuzbyt.newsnow.data
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
-import ua.sviatkuzbyt.newsnow.MainActivity
 import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReviewLoad(country: String, private val request: RequestsNewsData) {
-    private val url = "https://newsdata.io/api/1/news?" +
+    private val urlReview = "https://newsdata.io/api/1/news?" +
             "apikey=pub_1228749eee196a77f494bc549964a1cd5318c" +
             "&country=$country"
+    private val urlSearch = "https://newsdata.io/api/1/news?" +
+            "apikey=pub_1228749eee196a77f494bc549964a1cd5318c" +
+            "&q="
     fun loadNews(page: Int): MutableList<NewsContainer>?{
-        val list = mutableListOf<NewsContainer>()
-        try {
-            val textUrl = URL("$url&page=$page").readText()
-            val json = JSONObject(textUrl).getJSONArray("results")
-
-            for (i in 0 until json.length()){
-                val jsonObject = json.getJSONObject(i)
-
-                val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-                df.timeZone = TimeZone.getTimeZone("UTC")
-                val date: Date = df.parse(jsonObject.getString("pubDate"))!!
-                df.timeZone = TimeZone.getDefault()
-
-                list.add(
-                    NewsContainer(
-                        jsonObject.getString("title"),
-                        jsonObject.getString("source_id"),
-                        df.format(date).subSequence(5, 16).toString(),
-                        request.isSaved(jsonObject.getString("link")),
-                        loadImage(jsonObject.getString("image_url")),
-                        jsonObject.getString("link")
-                    )
-                )
-            }
-            return list
+        return try {
+            val textUrl = URL("$urlReview&page=$page").readText()
+            jsonConvert(textUrl)
         } catch (e: Exception){
-            return null
+            null
         }
+    }
 
+    fun loadSearch(q: String): MutableList<NewsContainer>?{
+        return try {
+            val textUrl = URL("$urlSearch$q").readText()
+            jsonConvert(textUrl)
+        } catch (e: Exception){
+            null
+        }
+    }
+
+    private fun jsonConvert(text: String): MutableList<NewsContainer>{
+        val list = mutableListOf<NewsContainer>()
+        val json = JSONObject(text).getJSONArray("results")
+
+        for (i in 0 until json.length()){
+            val jsonObject = json.getJSONObject(i)
+
+            val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+            df.timeZone = TimeZone.getTimeZone("UTC")
+            val date: Date = df.parse(jsonObject.getString("pubDate"))!!
+            df.timeZone = TimeZone.getDefault()
+
+            list.add(
+                NewsContainer(
+                    jsonObject.getString("title"),
+                    jsonObject.getString("source_id"),
+                    df.format(date).subSequence(5, 16).toString(),
+                    request.isSaved(jsonObject.getString("link")),
+                    loadImage(jsonObject.getString("image_url")),
+                    jsonObject.getString("link")
+                )
+            )
+        }
+        return list
     }
 
     private fun loadImage(urlImage: String): Bitmap? {

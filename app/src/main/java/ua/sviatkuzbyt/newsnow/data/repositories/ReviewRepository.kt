@@ -6,7 +6,7 @@ import ua.sviatkuzbyt.newsnow.data.ReviewLoad
 import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import ua.sviatkuzbyt.newsnow.data.database.SavedNewsEntity
 
-class ReviewRepository(private val request: RequestsNewsData) {
+class ReviewRepository(request: RequestsNewsData) {
     private val connection = ReviewLoad("ua", request)
     fun getRecentlyNews(page: Int): MutableList<NewsContainer>?{
         Log.v("reps","Воно довге, сука")

@@ -7,4 +7,7 @@
     <string name="saved">Saved</string>
     <string name="setting">Setting</string>
     <string name="internet_error">Load error, try later</string>
+    <string name="search_hint">Enter a search query…</string>
+    <string name="history">Results</string>
+    <string name="searching">Searching…</string>
 </resources>
