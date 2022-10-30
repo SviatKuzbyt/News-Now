@@ -1,6 +1,7 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import java.sql.Time
 
 var updateDataBaseFromReview = false
 
@@ -22,4 +23,15 @@ class DataRepository(private val request: RequestsNewsData) {
     }
 
     fun getData(): MutableList<SavedNewsEntity> = request.getSavedNews()
+
+    fun getHistory() = request.getHistory()
+
+    fun addHistory(text: String) {
+        request.addHistory(HistoryEntity(
+            0,
+            text
+        ))
+    }
+
+    fun deleteHistory(history: String){ request.deleteHistory(history) }
 }

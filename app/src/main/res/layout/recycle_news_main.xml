@@ -11,6 +11,7 @@
         android:id="@+id/cardViewRecycle"
         android:layout_width="0dp"
         android:layout_height="192dp"
+        android:visibility="visible"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,9 +41,8 @@
     <TextView
         android:id="@+id/labelNewsRecycle"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/inter"
-        android:minHeight="75dp"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
-import ua.sviatkuzbyt.newsnow.ui.elements.SavedAdapter
+import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SavedAdapter
 
 
 class SavedFragment : Fragment() {
@@ -30,7 +30,6 @@ class SavedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var first = true
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleViewSaved)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBarSaved)
         var adapter: SavedAdapter? = null
         recyclerView.layoutManager = LinearLayoutManager(activity)
 

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_close.xml" value="0.1745" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_review.xml" value="0.1695" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_saved_blue.xml" value="0.2" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_saved_gray.xml" value="0.173" />
@@ -13,8 +14,9 @@
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/fragment_review.xml" value="0.22" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/fragment_saved.xml" value="0.2" />
-        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/fragment_setting.xml" value="0.21041666666666667" />
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/history_recycle.xml" value="0.25" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/recycle_loading.xml" value="0.33" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/recycle_news.xml" value="0.25" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/layout/recycle_news_main.xml" value="0.33" />

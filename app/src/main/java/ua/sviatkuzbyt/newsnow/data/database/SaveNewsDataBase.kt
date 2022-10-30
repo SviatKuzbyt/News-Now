@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(version = 1, entities = [SavedNewsEntity::class], exportSchema = false)
+@Database(version = 1, entities = [SavedNewsEntity::class, HistoryEntity::class], exportSchema = false)
 abstract class SaveNewsDataBase : RoomDatabase() {
     abstract fun request(): RequestsNewsData
 

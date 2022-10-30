@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.ui.elements
+package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,20 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
 import ua.sviatkuzbyt.newsnow.ui.review.ReviewViewModel
-import ua.sviatkuzbyt.newsnow.ui.search.SearchViewModel
 
 
-class SearchAdapter(
+class ReviewAdapter(
     private val dataSet: List<NewsContainer>,
     private val context: Context,
-    private val viewModel: SearchViewModel
-) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    private val viewModel: ReviewViewModel
+) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -32,6 +32,7 @@ class SearchAdapter(
         val sourceNewsTextView: TextView
         val labelNewsTextView: TextView
         val timeNewsTextView: TextView
+        val cardViewRecycle: CardView
 
         val saveNewsButton: Button
         val shareNewsButton: Button
@@ -42,6 +43,7 @@ class SearchAdapter(
             sourceNewsTextView = view.findViewById(R.id.sourceNewsRecycle)
             labelNewsTextView = view.findViewById(R.id.labelNewsRecycle)
             timeNewsTextView = view.findViewById(R.id.timeNewsRecycle)
+            cardViewRecycle = view.findViewById(R.id.cardViewRecycle)
 
             saveNewsButton = view.findViewById(R.id.saveNewsRecycle)
             shareNewsButton = view.findViewById(R.id.shareNewsRecycle)
@@ -52,8 +54,15 @@ class SearchAdapter(
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
+        val view = if (viewType == 1){
+            LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.recycle_news_main, viewGroup, false)
+
+        } else {
+            LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.recycle_news, viewGroup, false)
+        }
+
         return ViewHolder(view)
     }
 
@@ -64,7 +73,10 @@ class SearchAdapter(
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        if (dataSet[position].image != null) viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
+        if (dataSet[position].image == null){
+            viewHolder.cardViewRecycle.visibility = View.GONE
+        }else viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
+
         viewHolder.sourceNewsTextView.text = dataSet[position].source
         viewHolder.labelNewsTextView.text = dataSet[position].label
         viewHolder.timeNewsTextView.text = dataSet[position].time

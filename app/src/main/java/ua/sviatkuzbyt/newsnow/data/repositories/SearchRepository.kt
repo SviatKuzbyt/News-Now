@@ -7,7 +7,7 @@ import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 class SearchRepository(request: RequestsNewsData) {
     private val connection = ReviewLoad("ua", request)
 
-    fun search(q: String): MutableList<NewsContainer>?{
-        return connection.loadSearch(q)
+    fun search(q: String, page: Int): MutableList<NewsContainer>?{
+        return connection.loadSearch(q, page)
     }
 }

@@ -24,9 +24,9 @@ class ReviewLoad(country: String, private val request: RequestsNewsData) {
         }
     }
 
-    fun loadSearch(q: String): MutableList<NewsContainer>?{
+    fun loadSearch(q: String, page: Int): MutableList<NewsContainer>?{
         return try {
-            val textUrl = URL("$urlSearch$q").readText()
+            val textUrl = URL("$urlSearch${q}&page=$page").readText()
             jsonConvert(textUrl)
         } catch (e: Exception){
             null
