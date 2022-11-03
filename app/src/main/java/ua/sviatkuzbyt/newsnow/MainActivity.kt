@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,10 +25,8 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_saved,
             R.id.navigation_setting
         ))
-        navController
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigator.setupWithNavController(navController)
-
     }
 }

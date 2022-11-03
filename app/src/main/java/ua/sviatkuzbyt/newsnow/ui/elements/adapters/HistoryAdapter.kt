@@ -13,8 +13,13 @@ import ua.sviatkuzbyt.newsnow.ui.search.SearchViewModel
 class HistoryAdapter(
     private val dataSet: List<String>,
     private val context: Context,
-    private val viewModel: SearchViewModel
+    private val viewModel: SearchViewModel,
+    private val listener: HistoryInterface
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>()  {
+
+    interface HistoryInterface{
+        fun searchNews(news: String)
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val textHistory: TextView
@@ -37,8 +42,11 @@ class HistoryAdapter(
         holder.textHistory.text = historyString
 
         holder.closetButton.setOnClickListener {
-            viewModel.deleteHistory(historyString)
-            viewModel.deleteHistory.value = position
+            viewModel.deleteHistory(historyString, position)
+        }
+
+        holder.itemView.setOnClickListener {
+            this.listener.searchNews(dataSet[position])
         }
     }
 

@@ -10,10 +10,10 @@ import java.util.*
 
 class ReviewLoad(country: String, private val request: RequestsNewsData) {
     private val urlReview = "https://newsdata.io/api/1/news?" +
-            "apikey=pub_1228749eee196a77f494bc549964a1cd5318c" +
+            "apikey=pub_11792063ac011beca171231a9b2ae554997ba" +
             "&country=$country"
     private val urlSearch = "https://newsdata.io/api/1/news?" +
-            "apikey=pub_1228749eee196a77f494bc549964a1cd5318c" +
+            "apikey=pub_11792063ac011beca171231a9b2ae554997ba" +
             "&q="
     fun loadNews(page: Int): MutableList<NewsContainer>?{
         return try {

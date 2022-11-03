@@ -12,20 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textDescription"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
+    <ua.sviatkuzbyt.newsnow.ui.elements.SearchEditText
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/search_background"
-        android:ems="10"
+
         android:fontFamily="@font/inter"
         android:inputType="text"
         android:paddingHorizontal="16dp"
@@ -36,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:hint="@string/search_hint"
         android:autofillHints=""
-        android:imeOptions="actionSearch" />
+        android:imeOptions="actionSearch"/>
 
     <TextView
         android:id="@+id/textDescription"
@@ -45,18 +47,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/inter_bold"
-        android:text="@string/history"
+        android:text="@string/search_history"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarSearch" />
+        app:layout_constraintStart_toEndOf="@+id/progressBarSearch"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -69,26 +71,13 @@
     <ProgressBar
         android:id="@+id/progressBarSearch"
         style="?android:attr/progressBarStyle"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
-
-    <TextView
-        android:id="@+id/textSearching"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/inter"
-        android:text="@string/searching"
-        android:textColor="@color/black_gray"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBarSearch"
-        app:layout_constraintStart_toEndOf="@+id/progressBarSearch"
-        app:layout_constraintTop_toTopOf="@+id/progressBarSearch" />
+        app:layout_constraintTop_toTopOf="@+id/textDescription" />
 
     <ProgressBar
         android:id="@+id/progressBarLoadSearch"

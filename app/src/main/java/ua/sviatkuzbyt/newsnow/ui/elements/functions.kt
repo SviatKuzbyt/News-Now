@@ -3,6 +3,7 @@ package ua.sviatkuzbyt.newsnow.ui.elements
 import android.app.Activity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import ua.sviatkuzbyt.newsnow.R
 
 
 fun hideKeyboard(activity: Activity) {
@@ -16,3 +17,4 @@ fun hideKeyboard(activity: Activity) {
     }
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
