@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">News Now</string>
+    <string name="review">Análise</string>
+    <string name="search">Procurar</string>
+    <string name="saved">Salvou</string>
+    <string name="setting">Contexto</string>
+    <string name="internet_error">Erro ao carregar, tente mais tarde</string>
+    <string name="search_hint">Insira uma consulta de pesquisa…</string>
+    <string name="search_result">Resultados</string>
+    <string name="search_history">História</string>
+    <string name="searching">Procurando…</string>
+    <string name="no_results">Sem resultados</string>
+    <string name="no_more_result">Não há mais resultado</string>
+    <string name="wait">Por favor, espere</string>
+</resources>

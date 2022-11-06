@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">News Now</string>
+    <string name="review">"검토 "</string>
+    <string name="search">검색</string>
+    <string name="saved">저장됨</string>
+    <string name="setting">환경</string>
+    <string name="internet_error">로드 오류, 나중에 시도</string>
+    <string name="search_hint">검색어를 입력하세요...</string>
+    <string name="search_result">결과</string>
+    <string name="search_history">역사</string>
+    <string name="searching">수색…</string>
+    <string name="no_results">결과 없음</string>
+    <string name="no_more_result">더 이상 결과 없음</string>
+    <string name="wait">기다리세요</string>
+</resources>

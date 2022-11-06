@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">News Now</string>
+    <string name="review">レビュー</string>
+    <string name="search">探す</string>
+    <string name="saved">保存しました</string>
+    <string name="setting">設定</string>
+    <string name="internet_error">読み込みエラーです。後で試してください</string>
+    <string name="search_hint">検索クエリを入力してください…</string>
+    <string name="search_result">結果</string>
+    <string name="search_history">歴史</string>
+    <string name="searching">検索中…</string>
+    <string name="no_results">結果がありません</string>
+    <string name="no_more_result">これ以上の結果はありません</string>
+    <string name="wait">お待ちください</string>
+</resources>

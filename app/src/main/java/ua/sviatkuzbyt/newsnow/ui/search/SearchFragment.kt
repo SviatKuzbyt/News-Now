@@ -1,12 +1,14 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
+import android.animation.Animator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
@@ -20,10 +22,11 @@ import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.ui.elements.SearchEditText
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.HistoryAdapter
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SearchAdapter
-import ua.sviatkuzbyt.newsnow.ui.elements.hideKeyboard
+import ua.sviatkuzbyt.newsnow.ui.elements.hideKeyboardFrom
 
 
 class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
+
     lateinit var viewModel: SearchViewModel
     lateinit var recycleHistory: RecyclerView
     lateinit var recycleSearch: RecyclerView
@@ -31,6 +34,8 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
     lateinit var editTextSearch: SearchEditText
     lateinit var progressBarLoadSearch: ProgressBar
     lateinit var textDescription: TextView
+    lateinit var clearButton: Button
+    lateinit var searchAdapter: SearchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,35 +52,40 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         //created views
         editTextSearch = view.findViewById(R.id.editTextSearch)
         textDescription = view.findViewById(R.id.textDescription)
+        clearButton = view.findViewById(R.id.clearButton)
+
         recycleSearch = view.findViewById(R.id.recycleSearch)
         recycleHistory = view.findViewById(R.id.historyRecycle)
-        progressBarSearch = view.findViewById(R.id.progressBarSearch)
 
+        progressBarSearch = view.findViewById(R.id.progressBarSearch)
         progressBarLoadSearch = view.findViewById(R.id.progressBarLoadSearch)
         progressBarLoadSearch.isIndeterminate = true
 
-
-        //RECYCLE SEARCH
-        val searchAdapter = SearchAdapter(
-            viewModel.listSearch.value!!, requireActivity(), viewModel
+        /*      RECYCLE SEARCH    */
+        //адаптер
+        searchAdapter = SearchAdapter(
+            viewModel.listSearch.value!!,
+            requireActivity(),
+            viewModel
         )
         recycleSearch.layoutManager = LinearLayoutManager(activity)
-        recycleSearch.adapter = searchAdapter //адаптер
+        recycleSearch.adapter = searchAdapter
 
         //заповнення інформації
         viewModel.listSearch.observe(viewLifecycleOwner) {
             if (viewModel.updatingSearch) {
+
                 //дозавантаження нових новин
                 if (viewModel.loadModeSearch == 2) {
-                    searchAdapter.notifyItemRangeInserted(
-                        viewModel.oldSizeSearch,
-                        viewModel.listSearch.value!!.size
-                    )
+                    putNews(viewModel.oldSizeSearch)
                     progressBarLoadSearch.visibility = View.GONE
 
                 } else { //результат пошуку
-                    searchAdapter.notifyItemRangeRemoved(0, viewModel.oldSizeSearch)
-                    searchAdapter.notifyItemRangeInserted(0, viewModel.listSearch.value!!.size)
+                    searchAdapter.notifyItemRangeRemoved( //delete all
+                        0,
+                        viewModel.oldSizeSearch
+                    )
+                    putNews(0)
                     progressBarSearch.visibility = View.GONE
                 }
                 //оновлення індекаторів оновлення (програмних)
@@ -89,65 +99,105 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+
                 if (
                     linearLayoutManager != null
-                    && linearLayoutManager.findLastCompletelyVisibleItemPosition() == viewModel.listSearch.value!!.size - 1
+                    && linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                    == viewModel.listSearch.value!!.size - 1
                     && viewModel.loadModeSearch == 0
                 ) {
-                    progressBarLoadSearch.visibility = View.VISIBLE
-                    viewModel.loadMoreNews()
+                    progressBarLoadSearch.visibility = View.VISIBLE //set progressbar
+                    viewModel.loadMoreNews() //load news
                 }
             }
         })
 
-        //RECYCLE HISTORY
-        val historyAdapter =
-            HistoryAdapter(viewModel.listHistory.value!!, requireActivity(), viewModel, this)
+        /*      RECYCLE HISTORY     */
+        //adapter
+        val historyAdapter = HistoryAdapter(
+            viewModel.listHistory.value!!,
+            requireActivity(),
+            viewModel,
+            this
+        )
         recycleHistory.layoutManager = LinearLayoutManager(activity)
         recycleHistory.adapter = historyAdapter
-        //Видалення елементу
-        viewModel.deleteHistory.observe(viewLifecycleOwner){
-            historyAdapter.notifyItemRemoved(it)
-            historyAdapter.notifyItemRangeChanged(it, viewModel.listHistory.value!!.size)
+
+        //загрузка історії
+        viewModel.listHistory.observe(viewLifecycleOwner){
+            val changeHistoryMode = viewModel.changeHistoryMode
+            if (changeHistoryMode != 0){
+                //додання історії
+                if (changeHistoryMode == 1){
+                    historyAdapter.notifyItemInserted(0)
+                    historyAdapter.notifyItemRangeChanged(
+                        0,
+                        viewModel.listHistory.value!!.size
+                    )
+
+                } //видалення історії
+                else {
+                    val deleteHistory = viewModel.deleteHistory
+                    historyAdapter.notifyItemRemoved(deleteHistory)
+
+                    historyAdapter.notifyItemRangeChanged(
+                        deleteHistory,
+                        viewModel.listHistory.value!!.size
+                    )
+                }
+                viewModel.changeHistoryMode = 0 //встановлення режиму
+            }
         }
 
-
-
-
-
-        //Запуск пошуку
-        editTextSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        /*      EDIT TEXT SEARCH      */
+        editTextSearch.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
                 viewModel.getNews(editTextSearch.text.toString())
                 //зміна відображення
                 progressBarSearch.visibility = View.VISIBLE
-                hideHistory()
-
-                hideKeyboard(requireActivity())
-
-                historyAdapter.notifyItemInserted(0)
-                historyAdapter.notifyItemRangeChanged(0, viewModel.listHistory.value!!.size)
+                editTextSearch.clearFocus()
+                hideKeyboardFrom(requireContext(), editTextSearch)
 
                 return@OnEditorActionListener true
             }
             false
         })
+        //delete text in edit text
+        clearButton.setOnClickListener { editTextSearch.setText("") }
 
+        //закритя/відкриття історії відповідно до фокусу
+        editTextSearch.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                clearButton.visibility = View.VISIBLE
+                if (!recycleHistory.isVisible) showHistory()
+            }
+            else {
+                clearButton.visibility = View.GONE
+                if (viewModel.updatingSearch || viewModel.listSearch.value!!.isNotEmpty())
+                    hideHistory()
+            }
+        }
 
-        //обробка помилки
+        //ERROR
         viewModel.error.observe(viewLifecycleOwner) {
+            //show message
             if (it != 0) {
                 val text = when (it) {
                         1 -> getString(R.string.internet_error)
-                        2 -> "No results"
-                        else -> "Please wait for end loading"
+                        2 -> getString(R.string.no_results)
+                        3 -> getString(R.string.no_more_result)
+                        else -> getString(R.string.wait)
                     }
 
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+
+                //hide views
                 if (progressBarSearch.isVisible) {
                     progressBarSearch.visibility = View.GONE
                 } else progressBarLoadSearch.visibility = View.GONE
 
+                //set modes in vm
                 viewModel.error.value = 0
                 if (it != 3){
                     viewModel.loadModeSearch = 0
@@ -156,19 +206,9 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
             }
         }
 
-
-
-
-
-        editTextSearch.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                if (!recycleHistory.isVisible) showHistory()
-            } else if (viewModel.listSearch.value!!.isNotEmpty()) {
-                hideHistory()
-            }
-        }
-
         if (viewModel.listSearch.value!!.isEmpty()) showHistory()
+
+
     }
 
     private fun showHistory(){
@@ -184,20 +224,19 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
     }
 
     override fun searchNews(news: String) {
+        if (editTextSearch.isFocused) hideKeyboardFrom(requireContext(), editTextSearch)
         progressBarSearch.visibility = View.VISIBLE
         hideHistory()
+
         editTextSearch.setText(news)
         viewModel.getNews(news)
+        editTextSearch.clearFocus()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (viewModel.updatingSearch){
-            viewModel.getNews().cancel()
-            viewModel.loadMoreNews().cancel()
-            viewModel.updatingSearch = false
-            viewModel.loadModeSearch = 0
-        }
-
+    private fun putNews(startElement: Int){
+        searchAdapter.notifyItemRangeInserted( //put all
+            startElement,
+            viewModel.listSearch.value!!.size
+        )
     }
 }

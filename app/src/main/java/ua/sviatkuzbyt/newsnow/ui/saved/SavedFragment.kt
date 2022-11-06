@@ -14,7 +14,6 @@ import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SavedAdapter
 
-
 class SavedFragment : Fragment() {
 
     lateinit var viewModel: SavedViewModel
@@ -42,8 +41,6 @@ class SavedFragment : Fragment() {
             if (it.isNotEmpty() && first){
                 adapter = SavedAdapter(viewModel.list.value!!, requireActivity(), viewModel)
                 recyclerView.adapter = adapter
-//                   adapter.notifyItemRangeInserted(1, it.size)
-                Log.v("Observe", "додав елементи")
                 first = false
             }
         }
@@ -51,10 +48,7 @@ class SavedFragment : Fragment() {
         viewModel.deleteElement.observe(viewLifecycleOwner){
             adapter?.notifyItemRemoved(it)
             adapter?.notifyItemRangeChanged(it, viewModel.list.value!!.size)
-            Log.v("Observe", it.toString())
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
-
 }

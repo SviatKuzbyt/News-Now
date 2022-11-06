@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">News Now</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="review">Review</string>
     <string name="search">Search</string>
     <string name="saved">Saved</string>
@@ -12,4 +10,6 @@
     <string name="search_history">History</string>
     <string name="searching">Searching…</string>
     <string name="no_results">No results</string>
+        <string name="no_more_result">No more result</string>
+    <string name="wait">Please wait</string>
 </resources>

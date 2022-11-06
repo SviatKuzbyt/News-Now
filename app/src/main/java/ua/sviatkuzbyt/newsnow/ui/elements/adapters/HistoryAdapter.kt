@@ -1,6 +1,7 @@
 package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class HistoryAdapter(
         }
 
         holder.itemView.setOnClickListener {
+            Log.v("historyAd", position.toString())
             this.listener.searchNews(dataSet[position])
         }
     }
