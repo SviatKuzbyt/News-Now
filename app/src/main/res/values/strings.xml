@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">News Now</string>
+    <string name="app_name" translatable="false">News Now</string>
     <string name="review">Review</string>
     <string name="search">Search</string>
     <string name="saved">Saved</string>
@@ -10,6 +10,16 @@
     <string name="search_history">History</string>
     <string name="searching">Searching…</string>
     <string name="no_results">No results</string>
-        <string name="no_more_result">No more result</string>
+    <string name="no_more_result">No more result</string>
     <string name="wait">Please wait</string>
+    <string name="system" translatable="false">System</string>
+    <string name="language_select" translatable="false">Select language</string>
+    <string name="language" translatable="false">Language for search</string>
+    <string name="all" translatable="false">All</string>
+    <string name="region" translatable="false">Region</string>
+    <string name="defaultValue" translatable="false">Default</string>
+    <string name="theme" translatable="false">App theme</string>
+    <string name="automatically" translatable="false">Automatically</string>
+    <string name="dark_theme" translatable="false">Dark</string>
+    <string name="light_theme" translatable="false">Light</string>
 </resources>

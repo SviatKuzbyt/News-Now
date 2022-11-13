@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">News Now</string>
     <string name="review">レビュー</string>
     <string name="search">探す</string>
     <string name="saved">保存しました</string>

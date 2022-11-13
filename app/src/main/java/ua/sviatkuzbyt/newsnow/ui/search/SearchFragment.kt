@@ -1,12 +1,11 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
-import android.animation.Animator
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ProgressBar
@@ -87,6 +86,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
                     )
                     putNews(0)
                     progressBarSearch.visibility = View.GONE
+                    textDescription.text = getString(R.string.search_result)
                 }
                 //оновлення індекаторів оновлення (програмних)
                 viewModel.loadModeSearch = 0
@@ -116,7 +116,6 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         //adapter
         val historyAdapter = HistoryAdapter(
             viewModel.listHistory.value!!,
-            requireActivity(),
             viewModel,
             this
         )
@@ -189,7 +188,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
                         3 -> getString(R.string.no_more_result)
                         else -> getString(R.string.wait)
                     }
-
+                textDescription.text = getString(R.string.search_result)
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 
                 //hide views
@@ -212,25 +211,28 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
     }
 
     private fun showHistory(){
-        recycleHistory.visibility = View.VISIBLE
-        recycleSearch.visibility = View.GONE
-        textDescription.text = getString(R.string.search_history)
+         recycleHistory.visibility = View.VISIBLE
+         recycleSearch.visibility = View.GONE
+         textDescription.text = getString(R.string.search_history)
     }
 
      private fun hideHistory(){
-        recycleHistory.visibility = View.GONE
-        recycleSearch.visibility = View.VISIBLE
-        textDescription.text = getString(R.string.search_result)
+         recycleHistory.visibility = View.GONE
+         recycleSearch.visibility = View.VISIBLE
+         if (viewModel.updatingSearch) textDescription.text = getString(R.string.searching)
+         else textDescription.text = getString(R.string.search_result)
     }
 
     override fun searchNews(news: String) {
-        if (editTextSearch.isFocused) hideKeyboardFrom(requireContext(), editTextSearch)
-        progressBarSearch.visibility = View.VISIBLE
-        hideHistory()
+        if (editTextSearch.isFocused){
+            hideKeyboardFrom(requireContext(), editTextSearch)
+            editTextSearch.clearFocus()
+        } else hideHistory()
 
+        progressBarSearch.visibility = View.VISIBLE
         editTextSearch.setText(news)
         viewModel.getNews(news)
-        editTextSearch.clearFocus()
+
     }
 
     private fun putNews(startElement: Int){

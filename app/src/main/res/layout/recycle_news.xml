@@ -11,9 +11,9 @@
         android:id="@+id/cardViewRecycle"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:visibility="visible"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
+        android:backgroundTint="?dividerColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sourceNewsRecycle">
 
@@ -21,8 +21,7 @@
             android:id="@+id/imageNewsRecycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="@drawable/no_image"/>
+            android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -32,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter"
-        android:textColor="@color/gray"
+        android:textColor="?colorOnSecondary"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +43,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter"
         android:minHeight="75dp"
-        android:textColor="@color/black"
+        android:textColor="?colorOnPrimary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
@@ -56,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter"
-        android:textColor="@color/gray"
+        android:textColor="?colorOnSecondary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/shareNewsRecycle"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
@@ -87,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:background="@color/light_gray"
+        android:background="?dividerColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shareNewsRecycle"
         />

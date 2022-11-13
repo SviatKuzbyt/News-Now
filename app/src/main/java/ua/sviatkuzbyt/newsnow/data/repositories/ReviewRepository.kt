@@ -1,20 +1,15 @@
 package ua.sviatkuzbyt.newsnow.data.repositories
 
-import android.util.Log
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
-import ua.sviatkuzbyt.newsnow.data.ReviewLoad
+import ua.sviatkuzbyt.newsnow.data.NewsLoad
 import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsEntity
 
 class ReviewRepository(request: RequestsNewsData) {
-    private val connection = ReviewLoad("ua", request)
-    fun getRecentlyNews(page: Int): MutableList<NewsContainer>?{
-        Log.v("reps","Воно довге, сука")
-        val list = connection.loadNews(page)
-        Log.v("reps","Воно не довге, сука")
-//        list?.forEach {
-//            if(request.isSaved(it.link)) it.isSaved = true
-//        }
-        return list
+    private val connection = NewsLoad(request)
+    private val key = "pub_11792063ac011beca171231a9b2ae554997ba"
+    private val link = "https://newsdata.io/api/1/news?apikey=$key&country="
+
+    fun getRecentlyNews(page: Int, region: String): MutableList<NewsContainer>?{
+        return connection.loadNews("$link${region}&page=$page")
     }
 }

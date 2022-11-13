@@ -10,9 +10,11 @@ import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
 import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
+import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.ReviewRepository
 
 class ReviewViewModel(application: Application): AndroidViewModel(application) {
+    val setting = DataSetting(application)
     private val repository: ReviewRepository //repositories
     private val dataRepository: DataRepository
 
@@ -33,6 +35,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
     val error = MutableLiveData<Boolean>()
 
+
     init {
         val data = SaveNewsDataBase.getDatabase(application).request()
         dataRepository = DataRepository(data)
@@ -42,7 +45,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
     fun firstUpdate(){
         viewModelScope.launch(Dispatchers.IO){
-            val lastNews = repository.getRecentlyNews(0)
+            val lastNews = repository.getRecentlyNews(0, setting.getRegionCode())
             if (lastNews != null){
                 oldSize = _list.size //change in local list
                 _list.clear()
@@ -58,7 +61,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
     fun update(){
         viewModelScope.launch(Dispatchers.IO){
-            val lastNews = repository.getRecentlyNews(page)
+            val lastNews = repository.getRecentlyNews(page, setting.getRegionCode())
             if (lastNews != null){
                 _list.addAll(lastNews) //change in local list
 

@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_saved" />
     <fragment
         android:id="@+id/navigation_setting"
-        android:name="ua.sviatkuzbyt.newsnow.ui.SettingFragment"
+        android:name="ua.sviatkuzbyt.newsnow.ui.setting.SettingFragment"
         android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

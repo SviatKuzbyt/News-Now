@@ -13,7 +13,6 @@ import ua.sviatkuzbyt.newsnow.ui.search.SearchViewModel
 
 class HistoryAdapter(
     private val dataSet: List<String>,
-    private val context: Context,
     private val viewModel: SearchViewModel,
     private val listener: HistoryInterface
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>()  {

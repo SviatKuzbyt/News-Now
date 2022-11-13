@@ -8,25 +8,11 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReviewLoad(country: String, private val request: RequestsNewsData) {
-    private val urlReview = "https://newsdata.io/api/1/news?" +
-            "apikey=pub_11792063ac011beca171231a9b2ae554997ba" +
-            "&country=$country"
-    private val urlSearch = "https://newsdata.io/api/1/news?" +
-            "apikey=pub_11792063ac011beca171231a9b2ae554997ba" +
-            "&q="
-    fun loadNews(page: Int): MutableList<NewsContainer>?{
-        return try {
-            val textUrl = URL("$urlReview&page=$page").readText()
-            jsonConvert(textUrl)
-        } catch (e: Exception){
-            null
-        }
-    }
+class NewsLoad(private val request: RequestsNewsData) {
 
-    fun loadSearch(q: String, page: Int): MutableList<NewsContainer>?{
+    fun loadNews(link: String): MutableList<NewsContainer>?{
         return try {
-            val textUrl = URL("$urlSearch${q}&page=$page").readText()
+            val textUrl = URL(link).readText()
             jsonConvert(textUrl)
         } catch (e: Exception){
             null
@@ -70,17 +56,4 @@ class ReviewLoad(country: String, private val request: RequestsNewsData) {
         }
 
     }
-
-//    fun loadNews(page: Int): MutableList<NewsContainer>{
-//    return runBlocking {
-//        delay(2000)
-//        return@runBlocking mutableListOf(
-//            NewsContainer(page.toString(), "12423", "11:45", false, null, "https://google.com"),
-//            NewsContainer(page.toString(), "12423", "11:45", false, null, "https://google.com"),
-//            NewsContainer(page.toString(), "12423", "11:45", false, null, "https://google.com"),
-//            NewsContainer(page.toString(), "12423", "11:45", false, null, "https://google.com")
-//        )
-//    }
-//    }
-
 }

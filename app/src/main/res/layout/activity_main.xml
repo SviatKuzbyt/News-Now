@@ -10,9 +10,9 @@
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="?android:statusBarColor"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/sandulLoh"
+        android:theme="@style/myToolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,8 @@
         android:id="@+id/bottom_navigator"
         app:menu="@menu/program_menu"
         app:labelVisibilityMode="unlabeled"
-        android:outlineProvider="none">
+        android:outlineProvider="none"
+        android:background="?android:statusBarColor">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

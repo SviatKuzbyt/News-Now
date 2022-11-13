@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
 import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
+import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.SearchRepository
 
 class SearchViewModel(application: Application): AndroidViewModel(application) {
@@ -30,6 +31,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     var loadModeSearch = 0
     var updatingSearch = false
     var changeHistoryMode = 0
+    val setting = DataSetting(application)
 
     init {
         //create repositories
@@ -51,7 +53,8 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
 
             loadModeSearch = 1
             updatingSearch = true
-            val news = repository.search(q, page)
+            page = 0
+            val news = repository.search(q, setting.getLanguageCode(), page)
 
             if (news == null) error.postValue(1)
             else if (news.isEmpty()) error.postValue(2)
@@ -71,7 +74,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
 
                 oldSizeSearch = _list.size
                 lastSearch = q
-                page = 0
+                page = 1
 
                 _list.clear()
                 _list.addAll(news)
@@ -85,14 +88,13 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     fun loadMoreNews() = viewModelScope.launch(Dispatchers.IO){
         loadModeSearch = 2
         updatingSearch = true
-        val news = repository.search(lastSearch, page)
+        val news = repository.search(lastSearch, setting.getLanguageCode(), page)
 
         if (news != null && news.isNotEmpty()){
             oldSizeSearch = _list.size
             page ++
 
             _list.addAll(news)
-
             listSearch.postValue(_list)
         }
         else error.postValue(
