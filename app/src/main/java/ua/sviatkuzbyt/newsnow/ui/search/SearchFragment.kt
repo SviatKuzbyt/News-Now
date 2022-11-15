@@ -173,8 +173,11 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
             }
             else {
                 clearButton.visibility = View.GONE
-                if (viewModel.updatingSearch || viewModel.listSearch.value!!.isNotEmpty())
+                if (viewModel.updatingSearch || viewModel.listSearch.value!!.isNotEmpty()){
                     hideHistory()
+                    Toast.makeText(context, "text", Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
 
@@ -227,7 +230,8 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         if (editTextSearch.isFocused){
             hideKeyboardFrom(requireContext(), editTextSearch)
             editTextSearch.clearFocus()
-        } else hideHistory()
+        }
+        hideHistory()
 
         progressBarSearch.visibility = View.VISIBLE
         editTextSearch.setText(news)

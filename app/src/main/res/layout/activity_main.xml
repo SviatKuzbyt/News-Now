@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="?android:statusBarColor"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/myToolbar"
+        android:theme="@style/Main.Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow.ui.setting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -35,6 +36,9 @@ class SettingValuesActivity : AppCompatActivity() {
         val settingIntent = intent
         mode = settingIntent.getIntExtra("key", 3)
         var modeString = ""
+
+        val textLinks = findViewById<TextView>(R.id.textLinks)
+//        textLinks.movementMethod = LinkMovementMethod.getInstance()
 
         when(mode){
             0 ->{

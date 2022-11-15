@@ -22,4 +22,7 @@
     <string name="automatically" translatable="false">Automatically</string>
     <string name="dark_theme" translatable="false">Dark</string>
     <string name="light_theme" translatable="false">Light</string>
+    <string name="information_content" translatable="false">News Now - an application for viewing the latest, current news around the world. In addition, it provides a service for searching and saving articles\nDemo application. Sviat Kuzbyt. November 2022</string>
+    <string name="information_label" translatable="false">Information</string>
+    <string name="links" translatable="false"><a href="http://www.google.com">Google</a></string>
 </resources>
