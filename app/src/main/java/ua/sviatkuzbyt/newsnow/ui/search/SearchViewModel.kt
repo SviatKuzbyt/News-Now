@@ -13,25 +13,33 @@ import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.SearchRepository
 
 class SearchViewModel(application: Application): AndroidViewModel(application) {
+
+    /*    VARIABLES    */
+
+    //repositories
     private val repository: SearchRepository
     private val dataRepository: DataRepository
-    val error = MutableLiveData<Int>()
-    //list search
+    val setting = DataSetting(application)
+    //private vars
     private val _list = mutableListOf<NewsContainer>()
-    val listSearch = MutableLiveData<List<NewsContainer>>(_list)
-    var oldSizeSearch = 0
-    private var page = 0
-    //list history
     private val _listHistory = mutableListOf<String>()
+    private var page = 0
+    private var lastSearch = ""
+    //observe values
+    val listSearch = MutableLiveData<List<NewsContainer>>(_list)
     val listHistory = MutableLiveData<List<String>>(_listHistory)
+    val error = MutableLiveData<Int>()
+    //control changes
+    var oldSizeSearch = 0
     var oldSizeHistory = 0
     var deleteHistory = 0
-    //values for work
-    private var lastSearch = ""
-    var loadModeSearch = 0
+    //mods
     var updatingSearch = false
+    var loadMore = false
+    var loadModeSearch = 0
     var changeHistoryMode = 0
-    val setting = DataSetting(application)
+
+    /*    INIT    */
 
     init {
         //create repositories
@@ -47,38 +55,38 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    /*    PUBLIC FUNCTIONS    */
+
     fun getNews(q: String = lastSearch) = viewModelScope.launch(Dispatchers.IO) {
         if (updatingSearch) error.postValue(3)
         else{
-
-            loadModeSearch = 1
+            //start load
             updatingSearch = true
-            page = 0
-            val news = repository.search(q, setting.getLanguageCode(), page)
-
+            val news = repository.search(q, setting.getLanguageCode(), 0)
+            //exceptions handling
             if (news == null) error.postValue(1)
             else if (news.isEmpty()) error.postValue(2)
 
+            //put news
             else{
-                if (q in _listHistory){
-                    dataRepository.deleteHistory(q)
-                    deleteHistory = _listHistory.indexOf(q)
-                    _listHistory.removeAt(deleteHistory)
-                    changeHistoryMode = 2
-                    listHistory.postValue(_listHistory)
-                }
+                //delete the last same search in history
+                if (q in _listHistory) deleteHistory(q, _listHistory.indexOf(q))
+
+                //add new search in history
                 dataRepository.addHistory(q)
                 _listHistory.add(0, q)
                 changeHistoryMode = 1
                 listHistory.postValue(_listHistory)
 
+                //change operators values
                 oldSizeSearch = _list.size
                 lastSearch = q
                 page = 1
+                loadModeSearch = 1
 
+                //publish news
                 _list.clear()
                 _list.addAll(news)
-
                 listSearch.postValue(_list)
             }
         }
@@ -86,21 +94,22 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun loadMoreNews() = viewModelScope.launch(Dispatchers.IO){
-        loadModeSearch = 2
+        //load news
         updatingSearch = true
         val news = repository.search(lastSearch, setting.getLanguageCode(), page)
 
         if (news != null && news.isNotEmpty()){
+            //change operators values
             oldSizeSearch = _list.size
             page ++
+            loadModeSearch = 2
 
+            //publish news
             _list.addAll(news)
             listSearch.postValue(_list)
         }
-        else error.postValue(
-            if(news == null) 1
-            else 3
-        )
+        //exception handling
+        else error.postValue(3)
     }
 
     fun addSavedNews(item: NewsContainer, updateSaved: Int){
@@ -119,7 +128,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
 
     fun deleteHistory(history: String, id: Int) = viewModelScope.launch(Dispatchers.IO) {
         dataRepository.deleteHistory(history)
-        _listHistory.remove(history)
+        _listHistory.removeAt(id)
         changeHistoryMode = 2
         deleteHistory = id
         listHistory.postValue(_listHistory)

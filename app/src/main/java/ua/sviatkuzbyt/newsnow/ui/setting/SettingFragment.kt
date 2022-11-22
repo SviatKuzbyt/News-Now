@@ -1,10 +1,12 @@
 package ua.sviatkuzbyt.newsnow.ui.setting
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +39,8 @@ class SettingFragment : Fragment() {
             adapter = SettingAdapter(it, requireActivity())
             recycleSetting.adapter = adapter
         }
+        val textLinks = view.findViewById<TextView>(R.id.textLinks)
+        textLinks.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onResume() {

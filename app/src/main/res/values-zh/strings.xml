@@ -12,4 +12,15 @@
     <string name="no_results">没有结果</string>
     <string name="no_more_result">没有更多的结果</string>
     <string name="wait">请稍等</string>
+    <string name="system">系统</string>
+    <string name="language_select">选择语言</string>
+    <string name="region_select">选择区域</string>
+    <string name="language">搜索语言</string>
+    <string name="all">全部</string>
+    <string name="region">地区</string>
+    <string name="defaultValue">默认</string>
+    <string name="information_content">News Now 是一款用于查看全球最新时事新闻的应用程序。 此外，它还提供搜索和保存文章的服务</string>
+    <string name="information_content_two">演示应用程序。 斯维亚特·库兹比特。 2022 年 11 月</string>
+    <string name="information_label">信息</string>
+    <string name="no_saved">没有保存的新闻</string>
 </resources>

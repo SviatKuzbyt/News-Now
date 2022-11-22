@@ -12,4 +12,15 @@
     <string name="no_results">Немає результатів</string>
     <string name="no_more_result">Немає більше результатів</string>
     <string name="wait">Будь ласка зачекайте</string>
+    <string name="system">Система</string>
+    <string name="language_select">Виберіть мову</string>
+    <string name="region_select">Виберіть регіон</string>
+    <string name="language">Мова пошуку</string>
+    <string name="all">Всі</string>
+    <string name="region">Регіон</string>
+    <string name="defaultValue">За замовчуванням</string>
+    <string name="information_content">News Now - додаток для перегляду останніх, актуальних новин по всьому світу. Крім того, надає послугу пошуку та збереження статтей</string>
+    <string name="information_content_two">Демонстраційний додаток. Sviat Kuzbyt. Листопад 2022</string>
+    <string name="information_label">Інформація</string>
+    <string name="no_saved">Немає збережених новин</string>
 </resources>

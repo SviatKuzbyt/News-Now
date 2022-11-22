@@ -12,4 +12,15 @@
     <string name="no_results">Aucun résultat</string>
     <string name="no_more_result">Plus de résultat</string>
     <string name="wait">S\'il vous plaît, attendez</string>
+    <string name="system">Système</string>
+    <string name="language_select">Choisir la langue</string>
+    <string name="region_select">Choisissez une région</string>
+    <string name="language">Langue de recherche</string>
+    <string name="all">Tout</string>
+    <string name="region">Région</string>
+    <string name="defaultValue">Défaut</string>
+    <string name="information_content">News Now est une application permettant de consulter les dernières actualités du monde entier. De plus, il fournit un service de recherche et d\'enregistrement d\'articles</string>
+    <string name="information_content_two">Demande de démonstration. Sviat Kuzbyt. novembre 2022</string>
+    <string name="information_label">Informations</string>
+    <string name="no_saved">Il n\'y a pas de nouvelles enregistrées</string>
 </resources>

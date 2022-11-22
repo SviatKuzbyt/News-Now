@@ -1,6 +1,5 @@
 package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ class HistoryAdapter(
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>()  {
 
     interface HistoryInterface{
-        fun searchNews(news: String)
+        fun searchNewsFromHistory(news: String)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -47,7 +46,7 @@ class HistoryAdapter(
 
         holder.itemView.setOnClickListener {
             Log.v("historyAd", position.toString())
-            this.listener.searchNews(dataSet[position])
+            this.listener.searchNewsFromHistory(dataSet[position])
         }
     }
 

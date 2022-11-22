@@ -1,7 +1,6 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
-import java.sql.Time
 
 var updateDataBaseFromReview = false
 

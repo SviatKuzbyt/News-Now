@@ -12,17 +12,18 @@
     <string name="no_results">No results</string>
     <string name="no_more_result">No more result</string>
     <string name="wait">Please wait</string>
-    <string name="system" translatable="false">System</string>
-    <string name="language_select" translatable="false">Select language</string>
-    <string name="language" translatable="false">Language for search</string>
-    <string name="all" translatable="false">All</string>
-    <string name="region" translatable="false">Region</string>
-    <string name="defaultValue" translatable="false">Default</string>
-    <string name="theme" translatable="false">App theme</string>
-    <string name="automatically" translatable="false">Automatically</string>
-    <string name="dark_theme" translatable="false">Dark</string>
-    <string name="light_theme" translatable="false">Light</string>
-    <string name="information_content" translatable="false">News Now - an application for viewing the latest, current news around the world. In addition, it provides a service for searching and saving articles\nDemo application. Sviat Kuzbyt. November 2022</string>
-    <string name="information_label" translatable="false">Information</string>
-    <string name="links" translatable="false"><a href="http://www.google.com">Google</a></string>
+
+    <string name="system" >System</string>
+    <string name="language_select">Select language</string>
+    <string name="region_select">Select region</string>
+    <string name="language" >Language for search</string>
+    <string name="all" >All</string>
+    <string name="region" >Region</string>
+    <string name="defaultValue">Default</string>
+    <string name="information_content">News Now is an application for viewing the latest, current news around the world. In addition, it provides a service for searching and saving articles</string>
+    <string name="information_content_two" >Demo application. Sviat Kuzbyt. November 2022</string>
+    <string name="information_label" >Information</string>
+    <string name="no_saved">There are no saved news</string>
+
+    <string name="links" translatable="false"><a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
 </resources>

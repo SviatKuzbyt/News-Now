@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black_gray</item>
         <item name="dividerColor">@color/light_black_gray</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/light_black_gray</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <!-- Customize your theme here. -->
     </style>
 

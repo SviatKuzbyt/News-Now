@@ -37,18 +37,15 @@ class SettingValuesActivity : AppCompatActivity() {
         mode = settingIntent.getIntExtra("key", 3)
         var modeString = ""
 
-        val textLinks = findViewById<TextView>(R.id.textLinks)
-//        textLinks.movementMethod = LinkMovementMethod.getInstance()
-
         when(mode){
             0 ->{
                 viewModel.loadLanguagesList()
-                labelText.text = getString(R.string.language)
+                labelText.text = getString(R.string.language_select)
                 modeString = "language"
             }
             1 ->{
                 viewModel.loadRegionsList()
-                labelText.text = getString(R.string.language)
+                labelText.text = getString(R.string.region_select)
                 modeString = "region"
             }
             else -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()

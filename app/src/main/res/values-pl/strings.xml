@@ -12,4 +12,15 @@
     <string name="no_results">Brak wyników</string>
     <string name="no_more_result">Brak wyników</string>
     <string name="wait">Proszę czekać</string>
+    <string name="system">System</string>
+    <string name="language_select">Wybierz język</string>
+    <string name="region_select">Wybierz region</string>
+    <string name="language">Język wyszukiwania</string>
+    <string name="all">Wszystko</string>
+    <string name="region">Region</string>
+    <string name="defaultValue">Domyślna</string>
+    <string name="information_content">News Now to aplikacja do przeglądania najnowszych, aktualnych wiadomości z całego świata. Ponadto udostępnia usługę wyszukiwania i zapisywania artykułów</string>
+    <string name="information_content_two">Aplikacja demonstracyjna. Świat Kuzbyt. listopad 2022 r</string>
+    <string name="information_label">Informacja</string>
+    <string name="no_saved">Brak zapisanych wiadomości</string>
 </resources>

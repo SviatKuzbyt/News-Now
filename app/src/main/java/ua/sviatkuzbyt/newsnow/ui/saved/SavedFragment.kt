@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,28 +30,30 @@ class SavedFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var first = true
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleViewSaved)
         var adapter: SavedAdapter? = null
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        val textNoSaved = view.findViewById<TextView>(R.id.textNoSaved)
 
         if (updateDataBaseFromReview){
             viewModel.updateSavedNews()
             updateDataBaseFromReview = false
         }
 
+
         viewModel.list.observe(viewLifecycleOwner){
-            if (it.isNotEmpty() && first){
+            if (it.isNotEmpty()){
                 adapter = SavedAdapter(viewModel.list.value!!, requireActivity(), viewModel)
                 recyclerView.adapter = adapter
-                first = false
-            }
+                if (textNoSaved.isVisible) textNoSaved.visibility = View.GONE
+            } else textNoSaved.visibility = View.VISIBLE
         }
 
         viewModel.deleteElement.observe(viewLifecycleOwner){
             adapter?.notifyItemRemoved(it)
             adapter?.notifyItemRangeChanged(it, viewModel.list.value!!.size)
         }
+
         super.onViewCreated(view, savedInstanceState)
     }
 }
