@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SavedAdapter
+import ua.sviatkuzbyt.newsnow.updateDataBaseFromReview
 
 class SavedFragment : Fragment() {
 

@@ -8,9 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
-import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
-import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
+import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.ReviewRepository
 
 class ReviewViewModel(application: Application): AndroidViewModel(application) {

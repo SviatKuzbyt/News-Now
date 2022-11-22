@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
-import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
 import ua.sviatkuzbyt.newsnow.ui.review.ReviewViewModel
+import ua.sviatkuzbyt.newsnow.updateDataBaseFromReview
 
 
 class ReviewAdapter(

@@ -10,3 +10,13 @@ data class NewsContainer(
     val image: Bitmap?,
     val link: String,
 )
+
+data class SettingKey(
+    val key: String,
+    var value: String
+)
+
+data class SettingValues(
+    val value: String,
+    val valueShort: String
+)

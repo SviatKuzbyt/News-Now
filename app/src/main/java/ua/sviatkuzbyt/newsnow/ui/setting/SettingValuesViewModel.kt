@@ -6,9 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.data.SettingValues
-import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
+import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.SettingRepository
-import kotlin.coroutines.coroutineContext
 
 class SettingValuesViewModel(application: Application): AndroidViewModel(application) {
     private var _valuesList = emptyList<SettingValues>()

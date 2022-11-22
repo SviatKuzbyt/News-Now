@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
 import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
-import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
+import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.SearchRepository
 
 class SearchViewModel(application: Application): AndroidViewModel(application) {

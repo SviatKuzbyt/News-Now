@@ -2,9 +2,8 @@ package ua.sviatkuzbyt.newsnow.data.database
 
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
 
-var updateDataBaseFromReview = false
-
 class DataRepository(private val request: RequestsNewsData) {
+    //functions for saved table
     fun addSavedNews(item: NewsContainer){
         request.addSaveNews(
             SavedNewsEntity(
@@ -20,10 +19,11 @@ class DataRepository(private val request: RequestsNewsData) {
     fun removeSavedNews(item: String){
         request.deleteSaveNews(item)
     }
-
     fun getData(): MutableList<SavedNewsEntity> = request.getSavedNews()
 
+    //function for history table
     fun getHistory() = request.getHistory()
+    fun deleteHistory(history: String){ request.deleteHistory(history) }
 
     fun addHistory(text: String) {
         request.addHistory(HistoryEntity(
@@ -31,6 +31,4 @@ class DataRepository(private val request: RequestsNewsData) {
             text
         ))
     }
-
-    fun deleteHistory(history: String){ request.deleteHistory(history) }
 }

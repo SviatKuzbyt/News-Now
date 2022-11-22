@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data.repositories
+package ua.sviatkuzbyt.newsnow.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
@@ -10,25 +10,26 @@ import ua.sviatkuzbyt.newsnow.dataStore
 import java.util.*
 
 class DataSetting(val context: Context) {
+    //keys
     private val region = stringPreferencesKey("region")
     private val language = stringPreferencesKey("language")
-    private val theme = stringPreferencesKey("theme")
     private val regionCode = stringPreferencesKey("region_code")
     private val languageCode = stringPreferencesKey("language_code")
-    private val themeCode = stringPreferencesKey("theme_code")
 
+    //get regions
     suspend fun getRegion():String{
         return  context.dataStore.data.map {
-            it[region] ?: Locale.getDefault().country
+            it[region] ?: context.getString(R.string.system)
         }.first()
     }
 
     suspend fun getRegionCode():String{
-        return  context.dataStore.data.map {
+        return context.dataStore.data.map {
             it[regionCode] ?: Locale.getDefault().country
         }.first()
     }
 
+    //get languages
     suspend fun getLanguage():String{
         return  context.dataStore.data.map {
             it[language] ?: context.getString(R.string.all)
@@ -41,6 +42,7 @@ class DataSetting(val context: Context) {
         }.first()
     }
 
+    //update params
     suspend fun setValue(value: String, key: String, code: String,  keyShort: String) {
         context.dataStore.edit { settings ->
             settings[stringPreferencesKey(key)] = value

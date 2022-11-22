@@ -1,17 +1,13 @@
 package ua.sviatkuzbyt.newsnow.ui.setting
 
 import android.app.Application
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.SettingKey
-import ua.sviatkuzbyt.newsnow.data.repositories.DataSetting
-import ua.sviatkuzbyt.newsnow.dataStore
+import ua.sviatkuzbyt.newsnow.data.DataSetting
 
 
 class SettingViewModel(application: Application): AndroidViewModel(application) {

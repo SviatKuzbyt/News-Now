@@ -8,13 +8,15 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewsLoad(private val request: RequestsNewsData) {
+open class NewsLoad(private val request: RequestsNewsData) {
 
     fun loadNews(link: String): MutableList<NewsContainer>?{
         return try {
+            //load data and convert it
             val textUrl = URL(link).readText()
             jsonConvert(textUrl)
-        } catch (e: Exception){
+        }
+        catch (e: Exception){
             null
         }
     }
@@ -26,11 +28,13 @@ class NewsLoad(private val request: RequestsNewsData) {
         for (i in 0 until json.length()){
             val jsonObject = json.getJSONObject(i)
 
+            //set date
             val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
             df.timeZone = TimeZone.getTimeZone("UTC")
             val date: Date = df.parse(jsonObject.getString("pubDate"))!!
             df.timeZone = TimeZone.getDefault()
 
+            //put element
             list.add(
                 NewsContainer(
                     jsonObject.getString("title"),
@@ -54,6 +58,5 @@ class NewsLoad(private val request: RequestsNewsData) {
         } catch (e: Exception) {
             null
         }
-
     }
 }
