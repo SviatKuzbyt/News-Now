@@ -1,9 +1,6 @@
 package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +9,8 @@ import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.NewsContainer
-//import ua.sviatkuzbyt.newsnow.data.database.updateDataBaseFromReview
+import ua.sviatkuzbyt.newsnow.ui.elements.openNews
+import ua.sviatkuzbyt.newsnow.ui.elements.shareNews
 import ua.sviatkuzbyt.newsnow.ui.search.SearchViewModel
 import ua.sviatkuzbyt.newsnow.updateDataBaseFromReview
 
@@ -23,10 +21,7 @@ class SearchAdapter(
     private val viewModel: SearchViewModel
 ) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
+    //initializing views
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageNewsImageView: ImageView
         val sourceNewsTextView: TextView
@@ -37,7 +32,6 @@ class SearchAdapter(
         val shareNewsButton: Button
 
         init {
-            // Define click listener for the ViewHolder's View.
             imageNewsImageView = view.findViewById(R.id.imageNewsRecycle)
             sourceNewsTextView = view.findViewById(R.id.sourceNewsRecycle)
             labelNewsTextView = view.findViewById(R.id.labelNewsRecycle)
@@ -47,76 +41,51 @@ class SearchAdapter(
             shareNewsButton = view.findViewById(R.id.shareNewsRecycle)
         }
     }
-
-    // Create new views (invoked by the layout manager)
-
+    //initializing layout
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.recycle_news, viewGroup, false)
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @SuppressLint("ResourceAsColor")
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-
-        if (dataSet[position].image != null) viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
+        //set data
+        viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
         viewHolder.sourceNewsTextView.text = dataSet[position].source
         viewHolder.labelNewsTextView.text = dataSet[position].label
         viewHolder.timeNewsTextView.text = dataSet[position].time
 
-        viewHolder.itemView.setOnClickListener {
-            try {
-                val urlIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(dataSet[position].link)
-                )
-                startActivity(context, urlIntent, null)
-            } catch (e: Exception){
-                Toast.makeText(context, "App don't founded for this action", Toast.LENGTH_LONG).show()
-            }
+        if (dataSet[position].isSaved)
+            viewHolder.saveNewsButton.background = getDrawable(context, R.drawable.ic_saved_blue)
+        else
+            viewHolder.saveNewsButton.background = getDrawable(context, R.drawable.ic_saved_gray)
 
+        //open news
+        viewHolder.itemView.setOnClickListener {
+            openNews(context, dataSet[position].link)
         }
 
         viewHolder.shareNewsButton.setOnClickListener {
-            try {
-                val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "${dataSet[position].label} : ${dataSet[position].link}")
-                shareIntent.type = "text/plain"
-                startActivity(context, shareIntent, null)
-            } catch (e: Exception){
-                Toast.makeText(context, "App don't founded for this action", Toast.LENGTH_LONG).show()
-            }
+            shareNews(context, dataSet[position].label, dataSet[position].link)
         }
 
-        if (dataSet[position].isSaved) viewHolder.saveNewsButton.background = getDrawable(context, R.drawable.ic_saved_blue)
+        //save news (maybe make later)
         viewHolder.saveNewsButton.setOnClickListener {
             updateDataBaseFromReview = true
+
             if (!dataSet[position].isSaved){
                 viewModel.addSavedNews(dataSet[position], position)
                 viewHolder.saveNewsButton.background = getDrawable(context, R.drawable.ic_saved_blue)
-                dataSet[position].isSaved = true
+//                dataSet[position].isSaved = true
             }
             else{
                 viewHolder.saveNewsButton.background = getDrawable(context, R.drawable.ic_saved_gray)
                 viewModel.removeSavedNews(dataSet[position].link, position)
-                dataSet[position].isSaved = false
+//                dataSet[position].isSaved = false
             }
-
         }
-
-
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 1 else 2
-    }
-
 }

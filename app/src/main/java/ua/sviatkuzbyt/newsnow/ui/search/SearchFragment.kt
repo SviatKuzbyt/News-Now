@@ -49,7 +49,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*    INITIALIZATION VIEWS    */
+        /**    INITIALIZATION VIEWS    */
 
         //editText
         editTextSearch = view.findViewById(R.id.editTextSearch)
@@ -81,14 +81,14 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         recycleHistory.layoutManager = LinearLayoutManager(activity)
         recycleHistory.adapter = historyAdapter
 
-        /*    CODE ON START ACTIVITY    */
+        /**   CODE ON START ACTIVITY    */
         if (viewModel.updatingSearch) editTextToSearch()
         else if (viewModel.listSearch.value!!.isNotEmpty()){
             showResults()
             if(viewModel.loadMore) progressBarLoadMore.visibility = View.VISIBLE
         }
 
-        /*    WORK EDITTEXT    */
+        /**    WORK EDITTEXT    */
 
         //call search, when we touch a button in keyboard
         editTextSearch.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
@@ -119,7 +119,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
             }
         }
 
-        /*    LOAD NEWS RESULTS    */
+        /**    LOAD NEWS RESULTS    */
 
         recycleSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -139,7 +139,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
             }
         })
 
-        /*    OBSERVES    */
+        /**    OBSERVES    */
 
         //ListSearch
         viewModel.listSearch.observe(viewLifecycleOwner) {

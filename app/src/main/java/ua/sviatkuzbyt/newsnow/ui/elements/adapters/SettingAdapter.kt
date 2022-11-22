@@ -1,6 +1,5 @@
 package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -19,14 +18,10 @@ class SettingAdapter(
     private val context: Context,
 ) : RecyclerView.Adapter<SettingAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
+    //initializing views
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textSettingLabel: TextView
         val textSettingValue: TextView
-
 
         init {
             textSettingLabel = view.findViewById(R.id.textSettingLabel)
@@ -34,35 +29,30 @@ class SettingAdapter(
         }
     }
 
-    // Create new views (invoked by the layout manager)
-
+    //initializing layout
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.setting_element, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
+        //set data
         viewHolder.textSettingLabel.text = dataSet[position].key
         viewHolder.textSettingValue.text = dataSet[position].value
 
-        val intent = Intent(context, SettingValuesActivity::class.java)
-        intent.putExtra("key", position)
-        intent.putExtra("selected", dataSet[position].value)
 
+        //open SettingValuesActivity
         viewHolder.itemView.setOnClickListener {
+            val intent = Intent(context, SettingValuesActivity::class.java)
+            intent.putExtra("key", position)
+            intent.putExtra("selected", dataSet[position].value)
+
             startActivity(context, intent, null)
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }

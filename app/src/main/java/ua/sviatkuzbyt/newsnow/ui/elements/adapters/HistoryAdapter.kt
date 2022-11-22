@@ -1,6 +1,5 @@
 package ua.sviatkuzbyt.newsnow.ui.elements.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,10 @@ class HistoryAdapter(
     private val listener: HistoryInterface
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>()  {
 
-    interface HistoryInterface{
-        fun searchNewsFromHistory(news: String)
-    }
+    //send text for search
+    interface HistoryInterface{ fun searchNewsFromHistory(news: String) }
 
+    //initializing views and layout
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val textHistory: TextView
         val closetButton: Button
@@ -37,15 +36,16 @@ class HistoryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //set data
         val historyString = dataSet[position]
         holder.textHistory.text = historyString
 
+        //initializing delete history
         holder.closetButton.setOnClickListener {
             viewModel.deleteHistory(historyString, position)
         }
-
+        //initializing search history
         holder.itemView.setOnClickListener {
-            Log.v("historyAd", position.toString())
             this.listener.searchNewsFromHistory(dataSet[position])
         }
     }
