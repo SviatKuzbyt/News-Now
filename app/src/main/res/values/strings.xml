@@ -26,4 +26,10 @@
     <string name="no_saved">There are no saved news</string>
 
     <string name="links" translatable="false"><a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="undo" translatable="false">Back</string>
+    <string name="close" translatable="false">Close</string>
+    <string name="image" translatable="false">Image for news</string>
+    <string name="save_news" translatable="false">Save news for later</string>
+    <string name="share" translatable="false">Share news</string>
+    <string name="delete_saved" translatable="false">Delete saved news</string>
 </resources>

@@ -17,17 +17,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBack"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/ic_back"
-            android:id="@+id/btnBack"/>
+            android:contentDescription="@string/undo"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="12dp" />
 
         <TextView
             android:id="@+id/labelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:paddingStart="16dp"
+            android:paddingHorizontal="16dp"
             android:textSize="16sp"
             android:textColor="?colorOnPrimary"/>
 

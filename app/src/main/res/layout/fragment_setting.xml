@@ -33,7 +33,8 @@
             android:textColor="?colorPrimary"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:ignore="TextContrastCheck" />
 
         <View
             android:id="@+id/divider"
@@ -85,11 +86,13 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter"
             android:text="@string/links"
+            android:textColor="#0277BD"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:ignore="TextContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -3,14 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.231" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_back.xml" value="0.159" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_close.xml" value="0.1745" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_close_white.xml" value="0.1585" />
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_launcher_background.xml" value="0.231" />
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_next.xml" value="0.231" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_review.xml" value="0.1695" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_saved.xml" value="0.1045" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_saved_blue.xml" value="0.2" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_saved_gray.xml" value="0.173" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_search.xml" value="0.1695" />
+        <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_setting.xml" value="0.231" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/ic_share_gray.xml" value="0.169" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/no_image.xml" value="0.1695" />
         <entry key="..\:/Developter/Android/NewsNow/app/src/main/res/drawable/no_image_large.xml" value="0.175" />
