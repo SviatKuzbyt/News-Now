@@ -81,7 +81,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         recycleHistory.layoutManager = LinearLayoutManager(activity)
         recycleHistory.adapter = historyAdapter
 
-        /**   CODE ON START ACTIVITY    */
+        /**   CODE ON START FRAGMENT    */
 
         if (viewModel.updatingSearch) editTextToSearch()
         else if (viewModel.listSearch.value!!.isNotEmpty()){

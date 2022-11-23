@@ -12,7 +12,7 @@ import ua.sviatkuzbyt.newsnow.data.NewsContainer
 import ua.sviatkuzbyt.newsnow.ui.elements.openNews
 import ua.sviatkuzbyt.newsnow.ui.elements.shareNews
 import ua.sviatkuzbyt.newsnow.ui.search.SearchViewModel
-import ua.sviatkuzbyt.newsnow.updateDataBaseFromReview
+import ua.sviatkuzbyt.newsnow.changeSavedNews
 
 
 class SearchAdapter(
@@ -72,7 +72,7 @@ class SearchAdapter(
 
         //save news (maybe make later)
         viewHolder.saveNewsButton.setOnClickListener {
-            updateDataBaseFromReview = true
+            changeSavedNews = true
 
             if (!dataSet[position].isSaved){
                 viewModel.addSavedNews(dataSet[position], position)

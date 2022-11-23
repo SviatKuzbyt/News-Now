@@ -57,7 +57,7 @@ class ReviewFragment : Fragment() {
         )
         recycleViewReview.adapter = adapter
 
-        /**   CODE ON START ACTIVITY    */
+        /**   CODE ON START FRAGMENT    */
         //set progressbar if necessary
         Log.v("viewModel.loadMode", viewModel.loadMode.toString())
         when(viewModel.loadMode){
@@ -114,8 +114,6 @@ class ReviewFragment : Fragment() {
                         it.size - viewModel.newElements,
                         viewModel.newElements
                     )
-                    Toast.makeText(activity, "Воно заповнює, бля", Toast.LENGTH_SHORT).show()
-
                     //hide progress more
                     if(viewModel.loadMode == 2) progressBarLoadMore.visibility = View.GONE
 

@@ -36,7 +36,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     init {
         //init data bases
         val data = SaveNewsDataBase.getDatabase(application).request()
-        dataRepository = DataRepository(data)
+        dataRepository = DataRepository(data, application)
         repository = ReviewRepository(data)
         //start load
         firstUpdate()

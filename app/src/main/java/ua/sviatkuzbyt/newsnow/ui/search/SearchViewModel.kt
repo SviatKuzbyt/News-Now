@@ -40,11 +40,10 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     var changeHistoryMode = 0
 
     /**    INIT    */
-
     init {
         //create repositories
         val data = SaveNewsDataBase.getDatabase(application).request()
-        dataRepository = DataRepository(data)
+        dataRepository = DataRepository(data, application)
         repository = SearchRepository(data)
 
         //get history data

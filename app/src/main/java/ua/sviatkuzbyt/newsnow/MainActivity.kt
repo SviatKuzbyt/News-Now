@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 val Context.dataStore by preferencesDataStore(name = "settings")
-var updateDataBaseFromReview = false
+var changeSavedNews = false
 
 class MainActivity : AppCompatActivity() {
 
