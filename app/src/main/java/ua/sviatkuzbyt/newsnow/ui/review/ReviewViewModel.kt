@@ -13,47 +13,53 @@ import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.ReviewRepository
 
 class ReviewViewModel(application: Application): AndroidViewModel(application) {
-    val setting = DataSetting(application)
-    private val repository: ReviewRepository //repositories
+
+    /**    VARIABLES    */
+
+    //repositories
+    private val repository: ReviewRepository
     private val dataRepository: DataRepository
-
+    private val setting = DataSetting(application)
+    //list
     private var _list = mutableListOf<NewsContainer>()
-    private var page = 0 //list
-
-    val list = MutableLiveData<List<NewsContainer>>(_list)
-    var newElements = 0 //list public
+    private var page = 0
+    //operators values
+    var newElements = 0
     var oldSize = 0
-
-    /*Стан завантаження даних:
-    * 0 - нічого не завантажує
-    * 1 - першочергове завантаження
-    * 2 - дозавантаження
-    * 3 - оновлення*/
     var loadMode = 1
-    var changed = false
-
+    var loaded = false
+    //observe values
+    val list = MutableLiveData<List<NewsContainer>>(_list)
     val error = MutableLiveData<Boolean>()
 
-
+    /**    INIT    */
     init {
+        //init data bases
         val data = SaveNewsDataBase.getDatabase(application).request()
         dataRepository = DataRepository(data)
         repository = ReviewRepository(data)
+        //start load
         firstUpdate()
     }
+
+    /**    PUBLIC FUNCTIONS    */
 
     fun firstUpdate(){
         viewModelScope.launch(Dispatchers.IO){
             val lastNews = repository.getRecentlyNews(0, setting.getRegionCode())
+
             if (lastNews != null){
-                oldSize = _list.size //change in local list
+                //change in local list
+                oldSize = _list.size
                 _list.clear()
                 _list.addAll(lastNews)
 
-                changed = true //change in global list
-                list.postValue(_list)
+                //change in global list
+                loaded = true
                 page = 1
                 newElements = lastNews.size
+                list.postValue(_list)
+
             } else error.postValue(true)
         }
     }
@@ -64,11 +70,13 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
             if (lastNews != null){
                 _list.addAll(lastNews) //change in local list
 
-                changed = true //change in global list
-                list.postValue(_list)
+                //change in global list
+                loaded = true
                 page ++
                 newElements = lastNews.size
+                list.postValue(_list)
             }
+
             else error.postValue(true)
         }
     }

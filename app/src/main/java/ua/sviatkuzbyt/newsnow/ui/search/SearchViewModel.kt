@@ -14,7 +14,7 @@ import ua.sviatkuzbyt.newsnow.data.repositories.SearchRepository
 
 class SearchViewModel(application: Application): AndroidViewModel(application) {
 
-    /*    VARIABLES    */
+    /**    VARIABLES    */
 
     //repositories
     private val repository: SearchRepository
@@ -39,7 +39,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     var loadModeSearch = 0
     var changeHistoryMode = 0
 
-    /*    INIT    */
+    /**    INIT    */
 
     init {
         //create repositories
@@ -55,7 +55,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    /*    PUBLIC FUNCTIONS    */
+    /**    PUBLIC FUNCTIONS    */
 
     fun getNews(q: String = lastSearch) = viewModelScope.launch(Dispatchers.IO) {
         if (updatingSearch) error.postValue(3)
@@ -127,8 +127,10 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun deleteHistory(history: String, id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        //delete history
         dataRepository.deleteHistory(history)
         _listHistory.removeAt(id)
+        //update view
         changeHistoryMode = 2
         deleteHistory = id
         listHistory.postValue(_listHistory)

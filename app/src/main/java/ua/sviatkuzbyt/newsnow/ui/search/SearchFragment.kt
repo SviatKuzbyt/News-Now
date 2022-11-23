@@ -82,6 +82,7 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         recycleHistory.adapter = historyAdapter
 
         /**   CODE ON START ACTIVITY    */
+
         if (viewModel.updatingSearch) editTextToSearch()
         else if (viewModel.listSearch.value!!.isNotEmpty()){
             showResults()
