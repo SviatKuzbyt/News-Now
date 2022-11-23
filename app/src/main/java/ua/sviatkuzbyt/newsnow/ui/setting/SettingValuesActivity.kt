@@ -2,7 +2,6 @@ package ua.sviatkuzbyt.newsnow.ui.setting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -12,31 +11,41 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SettingValuesAdapter
+import ua.sviatkuzbyt.newsnow.ui.elements.isDarkThemeOn
 
 class SettingValuesActivity : AppCompatActivity() {
-    var mode = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_value)
+
+        /**    INITIALIZATION VIEWS AND VARS    */
+
+        //ViewModel
         val viewModel = ViewModelProvider(this)[SettingValuesViewModel::class.java]
 
+        //List
         val recycleSettingValues = findViewById<RecyclerView>(R.id.recycleSettingValues)
-
-        val toolbarSettingValues = findViewById<Toolbar>(R.id.toolbarSettingValues)
-        setSupportActionBar(toolbarSettingValues)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
         recycleSettingValues.layoutManager = LinearLayoutManager(this)
         var adapter: SettingValuesAdapter
+        val color = if(isDarkThemeOn()) "#FFFFFFFF" else "#FF000000"
 
-        val labelText = findViewById<TextView>(R.id.labelText)
+        //Toolbar
+        val toolbarSettingValues = findViewById<Toolbar>(R.id.toolbarSettingValues)
+        setSupportActionBar(toolbarSettingValues)
+        supportActionBar?.setDisplayShowTitleEnabled(false) //delete standard view
+        val labelText = findViewById<TextView>(R.id.labelText) // text on toolbar
+        //button to back
         val btnBack = findViewById<Button>(R.id.btnBack)
         btnBack.setOnClickListener { finish() }
 
+
+        /**    INITIALIZATION CONTENT    */
+        //create and get values with content to fill
         val settingIntent = intent
-        mode = settingIntent.getIntExtra("key", 3)
+        val mode = settingIntent.getIntExtra("key", 3)
         var modeString = ""
 
+        //apply content: load list and text on toolbar
         when(mode){
             0 ->{
                 viewModel.loadLanguagesList()
@@ -51,15 +60,19 @@ class SettingValuesActivity : AppCompatActivity() {
             else -> Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
         }
 
+        /**    OBSERVES    */
+        //list, apply adapter
         viewModel.valuesList.observe(this){
             adapter = SettingValuesAdapter(
                 viewModel.valuesList.value!!,
                 viewModel,
                 settingIntent.getStringExtra("selected"),
-                modeString)
+                modeString,
+                color)
             recycleSettingValues.adapter = adapter
         }
 
+        //finish, close activity when element is selected
         viewModel.finish.observe(this){
             if (it){
                 viewModel.finish.value = false

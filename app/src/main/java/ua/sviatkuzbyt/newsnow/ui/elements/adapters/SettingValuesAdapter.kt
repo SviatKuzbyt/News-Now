@@ -14,7 +14,8 @@ class SettingValuesAdapter(
     private val dataSet: List<SettingValues>,
     private val viewModel: SettingValuesViewModel,
     private val selected: String?,
-    private val modeString: String
+    private val modeString: String,
+    private val color: String
 ) : RecyclerView.Adapter<SettingValuesAdapter.ViewHolder>() {
 
     //initializing views
@@ -38,7 +39,7 @@ class SettingValuesAdapter(
 
         if (dataSet[position].value == selected)
             viewHolder.textSetting.setTextColor(Color.parseColor("#0099FF"))
-        else viewHolder.textSetting.setTextColor(Color.BLACK)
+        else viewHolder.textSetting.setTextColor(Color.parseColor(color))
 
         //set parameter
         viewHolder.itemView.setOnClickListener {

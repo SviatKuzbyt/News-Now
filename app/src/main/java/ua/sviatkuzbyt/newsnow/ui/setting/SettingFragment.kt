@@ -11,19 +11,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.changeSetting
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SettingAdapter
 
-var change: String? = null
 class SettingFragment : Fragment() {
 
+    //publish views, vars
     lateinit var viewModel: SettingViewModel
     lateinit var recycleSetting: RecyclerView
+    lateinit var adapter: SettingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // create ViewModel
         viewModel = ViewModelProvider(this)[SettingViewModel::class.java]
         return inflater.inflate(R.layout.fragment_setting, container, false)
     }
@@ -31,26 +33,29 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //initializing views
         recycleSetting = view.findViewById(R.id.recycleSetting)
-        var adapter: SettingAdapter
         recycleSetting.layoutManager = LinearLayoutManager(activity)
 
+        val textLinks = view.findViewById<TextView>(R.id.textLinks)
+        textLinks.movementMethod = LinkMovementMethod.getInstance()
+
+        //observe settingList
         viewModel.settingList.observe(viewLifecycleOwner){
             adapter = SettingAdapter(it, requireActivity())
             recycleSetting.adapter = adapter
         }
-        val textLinks = view.findViewById<TextView>(R.id.textLinks)
-        textLinks.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onResume() {
         super.onResume()
-        if (change != null){
-            when(change){
+        if (changeSetting != null){
+            //updating settings text
+            when(changeSetting){
                 "language" -> viewModel.changeLanguage()
                 "region" -> viewModel.changeRegion()
             }
-            change = null
+            changeSetting = null
         }
     }
 }
