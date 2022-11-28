@@ -2,7 +2,6 @@ package ua.sviatkuzbyt.newsnow.ui.review
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.changeSavedNewsForReview
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.ReviewAdapter
 
 class ReviewFragment : Fragment() {
@@ -52,6 +52,11 @@ class ReviewFragment : Fragment() {
         recycleViewReview = view.findViewById(R.id.recycleViewReview)
         recycleViewReview.layoutManager = LinearLayoutManager(activity)
 
+        if (changeSavedNewsForReview){
+            viewModel.updateChanges()
+            changeSavedNewsForReview = false
+        }
+
         adapter = ReviewAdapter( //Set adapter
             viewModel.list.value!!, requireActivity(), viewModel
         )
@@ -59,11 +64,9 @@ class ReviewFragment : Fragment() {
 
         /**   CODE ON START FRAGMENT    */
         //set progressbar if necessary
-        Log.v("viewModel.loadMode", viewModel.loadMode.toString())
         when(viewModel.loadMode){
             1 -> {
                 progressBarReview.visibility = View.VISIBLE
-                Log.v("viewModel.loadMode", "ти лох")
             }
             2 -> progressBarLoadMore.visibility = View.VISIBLE
             3 -> refreshReview.isRefreshing = true

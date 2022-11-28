@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ua.sviatkuzbyt.newsnow.changeSavedNewsForReview
+import ua.sviatkuzbyt.newsnow.changeSavedNewsForSearch
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
 import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
 import ua.sviatkuzbyt.newsnow.data.database.SavedNewsEntity
@@ -46,6 +48,9 @@ class SavedViewModel(application: Application): AndroidViewModel(application) {
             _list.removeAt(id)
             deleteElement.postValue(id)
             dataRepository.removeSavedNews(link)
+
+            changeSavedNewsForReview = true
+            changeSavedNewsForSearch = true
         }
     }
 }

@@ -21,12 +21,12 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     private val dataRepository: DataRepository
     val setting = DataSetting(application)
     //private vars
-    private val _list = mutableListOf<NewsContainer>()
+    private var _listSearch = mutableListOf<NewsContainer>()
     private val _listHistory = mutableListOf<String>()
     private var page = 0
     private var lastSearch = ""
     //observe values
-    val listSearch = MutableLiveData<List<NewsContainer>>(_list)
+    val listSearch = MutableLiveData<List<NewsContainer>>(_listSearch)
     val listHistory = MutableLiveData<List<String>>(_listHistory)
     val error = MutableLiveData<Int>()
     //control changes
@@ -78,15 +78,15 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
                 listHistory.postValue(_listHistory)
 
                 //change operators values
-                oldSizeSearch = _list.size
+                oldSizeSearch = _listSearch.size
                 lastSearch = q
                 page = 1
                 loadModeSearch = 1
 
                 //publish news
-                _list.clear()
-                _list.addAll(news)
-                listSearch.postValue(_list)
+                _listSearch.clear()
+                _listSearch.addAll(news)
+                listSearch.postValue(_listSearch)
             }
         }
 
@@ -99,13 +99,13 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
 
         if (news != null && news.isNotEmpty()){
             //change operators values
-            oldSizeSearch = _list.size
+            oldSizeSearch = _listSearch.size
             page ++
             loadModeSearch = 2
 
             //publish news
-            _list.addAll(news)
-            listSearch.postValue(_list)
+            _listSearch.addAll(news)
+            listSearch.postValue(_listSearch)
         }
         //exception handling
         else error.postValue(3)
@@ -114,14 +114,14 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     fun addSavedNews(item: NewsContainer, updateSaved: Int){
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.addSavedNews(item)
-            _list[updateSaved].isSaved = true
+            _listSearch[updateSaved].isSaved = true
         }
     }
 
     fun removeSavedNews(item: String, updateSaved: Int){
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.removeSavedNews(item)
-            _list[updateSaved].isSaved = false
+            _listSearch[updateSaved].isSaved = false
         }
     }
 
@@ -133,5 +133,10 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
         changeHistoryMode = 2
         deleteHistory = id
         listHistory.postValue(_listHistory)
+    }
+
+    fun updateChanges() = viewModelScope.launch(Dispatchers.IO) {
+        _listSearch = repository.updateSaved(_listSearch)
+        listSearch.postValue(_listSearch)
     }
 }

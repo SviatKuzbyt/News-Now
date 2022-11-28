@@ -11,4 +11,6 @@ class ReviewRepository(request: RequestsNewsData): NewsLoad(request){
     fun getRecentlyNews(page: Int, region: String): MutableList<NewsContainer>?{
         return loadNews("$link${region}&page=$page")
     }
+
+
 }

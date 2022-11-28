@@ -21,6 +21,15 @@ open class NewsLoad(private val request: RequestsNewsData) {
         }
     }
 
+    fun updateSaved(list: MutableList<NewsContainer>):MutableList<NewsContainer>{
+        list.forEach {
+            val savedNews = request.isSaved(it.link)
+            if (!it.isSaved && savedNews) it.isSaved = true
+            else if (it.isSaved && !savedNews) it.isSaved = false
+        }
+        return list
+    }
+
     private fun jsonConvert(text: String): MutableList<NewsContainer>{
         val list = mutableListOf<NewsContainer>()
         val json = JSONObject(text).getJSONArray("results")

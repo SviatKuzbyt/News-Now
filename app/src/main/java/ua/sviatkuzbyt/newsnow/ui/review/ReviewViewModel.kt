@@ -92,6 +92,12 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.removeSavedNews(item)
             _list[updateSaved].isSaved = false
+
         }
+    }
+
+    fun updateChanges() = viewModelScope.launch(Dispatchers.IO) {
+        _list = repository.updateSaved(_list)
+        list.postValue(_list)
     }
 }

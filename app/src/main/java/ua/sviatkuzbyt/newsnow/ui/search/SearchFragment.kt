@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.changeSavedNewsForSearch
 import ua.sviatkuzbyt.newsnow.ui.elements.SearchEditText
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.HistoryAdapter
 import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SearchAdapter
@@ -62,6 +63,12 @@ class SearchFragment : Fragment(), HistoryAdapter.HistoryInterface {
         progressBarLoadMore.isIndeterminate = true
 
         //recycleSearch
+
+        if (changeSavedNewsForSearch){
+            if (viewModel.listSearch.value!!.isNotEmpty()) viewModel.updateChanges()
+            changeSavedNewsForSearch = false
+        }
+
         recycleSearch = view.findViewById(R.id.recycleSearch)
         searchAdapter = SearchAdapter(
             viewModel.listSearch.value!!,
