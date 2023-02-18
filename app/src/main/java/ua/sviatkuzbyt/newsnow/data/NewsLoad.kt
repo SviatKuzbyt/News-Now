@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow.data
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import org.json.JSONObject
 import ua.sviatkuzbyt.newsnow.data.database.RequestsNewsData
 import java.net.URL
@@ -9,14 +10,20 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 open class NewsLoad(private val request: RequestsNewsData) {
+    private var nextPage = ""
 
-    fun loadNews(link: String): MutableList<NewsContainer>?{
+    fun loadNews(link: String, firstPage: Boolean): MutableList<NewsContainer>?{
         return try {
             //load data and convert it
-            val textUrl = URL(link).readText()
+            if (firstPage)
+                nextPage = ""
+
+            val textUrl = URL(link + nextPage).readText()
+            nextPage = "&page=${JSONObject(textUrl).getString("nextPage")}"
             jsonConvert(textUrl)
         }
         catch (e: Exception){
+            Log.e("Фігня з загрузкою", e.message.toString())
             null
         }
     }

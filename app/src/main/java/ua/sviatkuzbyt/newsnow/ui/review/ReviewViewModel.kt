@@ -22,7 +22,6 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     private val setting = DataSetting(application)
     //list
     private var _list = mutableListOf<NewsContainer>()
-    private var page = 0
     //operators values
     var newElements = 0
     var oldSize = 0
@@ -46,7 +45,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
     fun firstUpdate(){
         viewModelScope.launch(Dispatchers.IO){
-            val lastNews = repository.getRecentlyNews(0, setting.getRegionCode())
+            val lastNews = repository.getRecentlyNews(true, setting.getRegionCode())
 
             if (lastNews != null){
                 //change in local list
@@ -56,7 +55,6 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
                 //change in global list
                 loaded = true
-                page = 1
                 newElements = lastNews.size
                 list.postValue(_list)
 
@@ -66,13 +64,12 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
 
     fun update(){
         viewModelScope.launch(Dispatchers.IO){
-            val lastNews = repository.getRecentlyNews(page, setting.getRegionCode())
+            val lastNews = repository.getRecentlyNews(false, setting.getRegionCode())
             if (lastNews != null){
                 _list.addAll(lastNews) //change in local list
 
                 //change in global list
                 loaded = true
-                page ++
                 newElements = lastNews.size
                 list.postValue(_list)
             }
@@ -87,7 +84,6 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
             _list[updateSaved].isSaved = true
         }
     }
-
     fun removeSavedNews(item: String, updateSaved: Int){
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.removeSavedNews(item)

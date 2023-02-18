@@ -23,7 +23,6 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     //private vars
     private var _listSearch = mutableListOf<NewsContainer>()
     private val _listHistory = mutableListOf<String>()
-    private var page = 0
     private var lastSearch = ""
     //observe values
     val listSearch = MutableLiveData<List<NewsContainer>>(_listSearch)
@@ -61,7 +60,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
         else{
             //start load
             updatingSearch = true
-            val news = repository.search(q, setting.getLanguageCode(), 0)
+            val news = repository.search(q, setting.getLanguageCode(), true)
             //exceptions handling
             if (news == null) error.postValue(1)
             else if (news.isEmpty()) error.postValue(2)
@@ -80,7 +79,6 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
                 //change operators values
                 oldSizeSearch = _listSearch.size
                 lastSearch = q
-                page = 1
                 loadModeSearch = 1
 
                 //publish news
@@ -95,12 +93,11 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     fun loadMoreNews() = viewModelScope.launch(Dispatchers.IO){
         //load news
         updatingSearch = true
-        val news = repository.search(lastSearch, setting.getLanguageCode(), page)
+        val news = repository.search(lastSearch, setting.getLanguageCode(), false)
 
         if (news != null && news.isNotEmpty()){
             //change operators values
             oldSizeSearch = _listSearch.size
-            page ++
             loadModeSearch = 2
 
             //publish news
