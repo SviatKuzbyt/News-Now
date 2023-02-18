@@ -15,8 +15,10 @@ open class NewsLoad(private val request: RequestsNewsData) {
     fun loadNews(link: String, firstPage: Boolean): MutableList<NewsContainer>?{
         return try {
             //load data and convert it
+            if (nextPage == "&page=null") throw Exception("no more result")
             if (firstPage)
                 nextPage = ""
+            Log.v("nextPage", nextPage)
 
             val textUrl = URL(link + nextPage).readText()
             nextPage = "&page=${JSONObject(textUrl).getString("nextPage")}"
