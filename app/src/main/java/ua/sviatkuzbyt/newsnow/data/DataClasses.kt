@@ -2,7 +2,7 @@ package ua.sviatkuzbyt.newsnow.data
 
 import android.graphics.Bitmap
 
-data class NewsContainer(
+data class NewsList(
     val label: String,
     val source: String,
     val time: String,

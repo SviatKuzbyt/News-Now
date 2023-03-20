@@ -1,61 +1,36 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import android.content.Context
-import android.widget.Toast
-import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import ua.sviatkuzbyt.newsnow.data.NewsList
 
-class DataRepository(private val request: RequestsNewsData, private val context: Context) {
-    //functions for saved table
-    fun addSavedNews(item: NewsContainer){
-        try {
-            request.addSaveNews(
-                SavedNewsEntity(
-                    0,
-                    item.label,
-                    item.source,
-                    item.time,
-                    item.link
-                )
-            )
-        } catch (e: Exception){ makeToast() }
-    }
+class DataRepository(context: Context) {
+    private val dao = NewsDataBase.getInstance(context).dao()
+
+    fun getSavedNews() = dao.getSavedNews()
 
     fun removeSavedNews(item: String){
-        try {
-            request.deleteSaveNews(item)
-        } catch (e: Exception){ makeToast() }
-
+        dao.deleteSaveNews(item)
     }
-    fun getData(): MutableList<SavedNewsEntity> =
-        try {
-            request.getSavedNews()
-        } catch (e: Exception){
-            makeToast()
-            mutableListOf()
-        }
 
-//function for history table
-    fun getHistory() = try {
-        request.getHistory()
-    }   catch (e: Exception){
-        makeToast()
-        mutableListOf()
+    fun addSavedNews(item: NewsList){
+        dao.addSaveNews(
+            SavedNewsEntity(
+                0,
+                item.label,
+                item.source,
+                item.time,
+                item.link
+            )
+        )
     }
+
+    fun getHistory() = dao.getHistory()
 
     fun deleteHistory(history: String){
-        try {
-            request.deleteHistory(history)
-        } catch (e: Exception){ makeToast() }
-
+        dao.deleteHistory(history)
     }
 
     fun addHistory(text: String) {
-        try {
-            request.addHistory(HistoryEntity(0, text))
-        } catch (e: Exception){ makeToast() }
-    }
-
-    private fun makeToast(){
-        Toast.makeText(context, "DB error", Toast.LENGTH_SHORT).show()
+        dao.addHistory(HistoryEntity(0, text))
     }
 }

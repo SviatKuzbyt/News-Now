@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import ua.sviatkuzbyt.newsnow.data.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
-import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
+import ua.sviatkuzbyt.newsnow.data.database.NewsDataBase
 import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.ReviewRepository
 
@@ -17,26 +17,26 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
     /**    VARIABLES    */
 
     //repositories
-    private val repository: ReviewRepository
+    private lateinit var repository: ReviewRepository
     private val dataRepository: DataRepository
     private val setting = DataSetting(application)
     //list
-    private var _list = mutableListOf<NewsContainer>()
+    private var _list = mutableListOf<NewsList>()
     //operators values
     var newElements = 0
     var oldSize = 0
     var loadMode = 1
     var loaded = false
     //observe values
-    val list = MutableLiveData<List<NewsContainer>>(_list)
+    val list = MutableLiveData<List<NewsList>>(_list)
     val error = MutableLiveData<Boolean>()
 
     /**    INIT    */
     init {
         //init data bases
-        val data = SaveNewsDataBase.getDatabase(application).request()
-        dataRepository = DataRepository(data, application)
-        repository = ReviewRepository(data)
+
+        dataRepository = DataRepository(application)
+        //repository = ReviewRepository(data)
         //start load
         firstUpdate()
     }
@@ -78,7 +78,7 @@ class ReviewViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun addSavedNews(item: NewsContainer, updateSaved: Int){
+    fun addSavedNews(item: NewsList, updateSaved: Int){
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.addSavedNews(item)
             _list[updateSaved].isSaved = true

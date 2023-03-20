@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import ua.sviatkuzbyt.newsnow.data.NewsList
 import ua.sviatkuzbyt.newsnow.ui.elements.openNews
 import ua.sviatkuzbyt.newsnow.ui.elements.shareNews
 import ua.sviatkuzbyt.newsnow.ui.review.ReviewViewModel
@@ -16,7 +16,7 @@ import ua.sviatkuzbyt.newsnow.changeSavedNews
 
 
 class ReviewAdapter(
-    private val dataSet: List<NewsContainer>,
+    private val dataSet: List<NewsList>,
     private val context: Context,
     private val viewModel: ReviewViewModel
 ) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {

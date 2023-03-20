@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.sviatkuzbyt.newsnow.data.NewsContainer
+import ua.sviatkuzbyt.newsnow.data.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
-import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
+import ua.sviatkuzbyt.newsnow.data.database.NewsDataBase
 import ua.sviatkuzbyt.newsnow.data.DataSetting
 import ua.sviatkuzbyt.newsnow.data.repositories.SearchRepository
 
@@ -17,15 +17,15 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     /**    VARIABLES    */
 
     //repositories
-    private val repository: SearchRepository
-    private val dataRepository: DataRepository
+    private lateinit var repository: SearchRepository
+    private lateinit var dataRepository: DataRepository
     val setting = DataSetting(application)
     //private vars
-    private var _listSearch = mutableListOf<NewsContainer>()
+    private var _listSearch = mutableListOf<NewsList>()
     private val _listHistory = mutableListOf<String>()
     private var lastSearch = ""
     //observe values
-    val listSearch = MutableLiveData<List<NewsContainer>>(_listSearch)
+    val listSearch = MutableLiveData<List<NewsList>>(_listSearch)
     val listHistory = MutableLiveData<List<String>>(_listHistory)
     val error = MutableLiveData<Int>()
     //control changes
@@ -41,9 +41,9 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     /**    INIT    */
     init {
         //create repositories
-        val data = SaveNewsDataBase.getDatabase(application).request()
-        dataRepository = DataRepository(data, application)
-        repository = SearchRepository(data)
+//        val data = NewsDataBase.getDatabase(application).request()
+//        dataRepository = DataRepository(data, application)
+//        repository = SearchRepository(data)
 
         //get history data
         viewModelScope.launch(Dispatchers.IO){
@@ -108,7 +108,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
         else error.postValue(3)
     }
 
-    fun addSavedNews(item: NewsContainer, updateSaved: Int){
+    fun addSavedNews(item: NewsList, updateSaved: Int){
         viewModelScope.launch(Dispatchers.IO){
             dataRepository.addSavedNews(item)
             _listSearch[updateSaved].isSaved = true

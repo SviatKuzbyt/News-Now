@@ -9,13 +9,13 @@ import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.changeSavedNewsForReview
 import ua.sviatkuzbyt.newsnow.changeSavedNewsForSearch
 import ua.sviatkuzbyt.newsnow.data.database.DataRepository
-import ua.sviatkuzbyt.newsnow.data.database.SaveNewsDataBase
+import ua.sviatkuzbyt.newsnow.data.database.NewsDataBase
 import ua.sviatkuzbyt.newsnow.data.database.SavedNewsEntity
 
 class SavedViewModel(application: Application): AndroidViewModel(application) {
 
     /**    VARIABLES    */
-    private val dataRepository: DataRepository
+    private lateinit var  dataRepository: DataRepository
     private val _list = mutableListOf<SavedNewsEntity>()
     val list = MutableLiveData<List<SavedNewsEntity>>(_list)
     val deleteElement = MutableLiveData<Int>()
@@ -23,8 +23,8 @@ class SavedViewModel(application: Application): AndroidViewModel(application) {
     /**    INIT    */
     init {
         //initializing data base
-        val data = SaveNewsDataBase.getDatabase(application).request()
-        dataRepository = DataRepository(data, application)
+//        val data = NewsDataBase.getDatabase(application).request()
+//        dataRepository = DataRepository(data, application)
         //load news
         getSavedNews()
     }
@@ -33,7 +33,7 @@ class SavedViewModel(application: Application): AndroidViewModel(application) {
 
     private fun getSavedNews(){
         viewModelScope.launch(Dispatchers.IO) {
-            _list.addAll(dataRepository.getData())
+            _list.addAll(dataRepository.getSavedNews())
             list.postValue(_list)
         }
     }
