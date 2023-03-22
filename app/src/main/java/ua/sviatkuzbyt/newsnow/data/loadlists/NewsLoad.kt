@@ -1,17 +1,17 @@
-package ua.sviatkuzbyt.newsnow.data
+package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import org.json.JSONObject
-import ua.sviatkuzbyt.newsnow.data.database.NewsDataBaseDao
+import ua.sviatkuzbyt.newsnow.data.other.NewsList
+import ua.sviatkuzbyt.newsnow.data.database.SavedNewsDBRepository
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class NewsLoad(private val request: NewsDataBaseDao) {
+open class NewsLoad(private val savedNewsDBRepository: SavedNewsDBRepository) {
 
-    lateinit var dataFormat: SimpleDateFormat
+    private lateinit var dataFormat: SimpleDateFormat
     init {
         initDataFormat()
     }
@@ -22,9 +22,11 @@ open class NewsLoad(private val request: NewsDataBaseDao) {
         dataFormat.timeZone = TimeZone.getDefault()
     }
 
-    fun getListFromUrl(link: String): MutableList<NewsList>{
+    fun getListFromUrl(link: String): NewsContainer {
         val urlResult = URL(link).readText()
-        return jsonConvert(urlResult)
+        val list = jsonConvert(urlResult)
+        val nextPage = getNextPage(urlResult)
+        return NewsContainer(list, nextPage)
     }
 
     private fun jsonConvert(text: String): MutableList<NewsList>{
@@ -38,7 +40,7 @@ open class NewsLoad(private val request: NewsDataBaseDao) {
                     jsonObject.getString("title"),
                     jsonObject.getString("source_id"),
                     getDate(jsonObject.getString("pubDate")),
-                    request.isSaved(jsonObject.getString("link")),
+                    savedNewsDBRepository.isSaved(jsonObject.getString("link")),
                     loadImage(jsonObject.optString("image_url")),
                     jsonObject.getString("link")
                 )
@@ -62,33 +64,13 @@ open class NewsLoad(private val request: NewsDataBaseDao) {
         }
     }
 
-    //old code
-    private var nextPage = ""
-
-    fun loadNews(link: String, firstPage: Boolean): MutableList<NewsList>?{
-        return try {
-            //load data and convert it
-            if (nextPage == "&page=null") throw Exception("no more result")
-            if (firstPage)
-                nextPage = ""
-            Log.v("nextPage", nextPage)
-
-            val textUrl = URL(link + nextPage).readText()
-            nextPage = "&page=${JSONObject(textUrl).getString("nextPage")}"
-            jsonConvert(textUrl)
-        }
-        catch (e: Exception){
-            Log.e("Фігня з загрузкою", e.message.toString())
-            null
-        }
+    private fun getNextPage(text: String): String{
+        val json = JSONObject(text)
+        return json.getString("nextPage")
     }
 
-    fun updateSaved(list: MutableList<NewsList>):MutableList<NewsList>{
-        list.forEach {
-            val savedNews = request.isSaved(it.link)
-            if (!it.isSaved && savedNews) it.isSaved = true
-            else if (it.isSaved && !savedNews) it.isSaved = false
-        }
-        return list
-    }
+    data class NewsContainer(
+        val newsList: MutableList<NewsList>,
+        val nextPage: String
+    )
 }

@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data.database
+package ua.sviatkuzbyt.newsnow.data.database.room
 
 import androidx.room.Dao
 import androidx.room.Insert

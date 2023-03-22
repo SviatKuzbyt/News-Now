@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data
+package ua.sviatkuzbyt.newsnow.data.other
 
 import android.graphics.Bitmap
 

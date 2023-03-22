@@ -1,16 +1,14 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import android.content.Context
-import ua.sviatkuzbyt.newsnow.data.NewsList
+import ua.sviatkuzbyt.newsnow.data.other.NewsList
+import ua.sviatkuzbyt.newsnow.data.database.room.NewsDataBase
+import ua.sviatkuzbyt.newsnow.data.database.room.SavedNewsEntity
 
-class DataRepository(context: Context) {
+class SavedNewsDBRepository(context: Context) {
     private val dao = NewsDataBase.getInstance(context).dao()
 
     fun getSavedNews() = dao.getSavedNews()
-
-    fun removeSavedNews(item: String){
-        dao.deleteSaveNews(item)
-    }
 
     fun addSavedNews(item: NewsList){
         dao.addSaveNews(
@@ -24,13 +22,9 @@ class DataRepository(context: Context) {
         )
     }
 
-    fun getHistory() = dao.getHistory()
-
-    fun deleteHistory(history: String){
-        dao.deleteHistory(history)
+    fun removeSavedNews(item: String){
+        dao.deleteSaveNews(item)
     }
 
-    fun addHistory(text: String) {
-        dao.addHistory(HistoryEntity(0, text))
-    }
+    fun isSaved(link: String) = dao.isSaved(link)
 }

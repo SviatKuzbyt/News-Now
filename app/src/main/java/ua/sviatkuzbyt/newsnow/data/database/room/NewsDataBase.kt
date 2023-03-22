@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data.database
+package ua.sviatkuzbyt.newsnow.data.database.room
 
 import android.content.Context
 import androidx.room.Database

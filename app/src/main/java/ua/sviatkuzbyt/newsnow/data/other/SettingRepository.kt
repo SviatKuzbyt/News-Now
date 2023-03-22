@@ -1,8 +1,7 @@
-package ua.sviatkuzbyt.newsnow.data.repositories
+package ua.sviatkuzbyt.newsnow.data.other
 
 import android.content.Context
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.SettingValues
 import java.util.*
 
 class SettingRepository(context: Context) {
