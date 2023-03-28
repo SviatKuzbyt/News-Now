@@ -5,7 +5,7 @@ import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.room.NewsDataBase
 import ua.sviatkuzbyt.newsnow.data.database.room.SavedNewsEntity
 
-class SavedNewsDBRepository(context: Context) {
+class SavedNewsTableRepository(context: Context) {
     private val dao = NewsDataBase.getInstance(context).dao()
 
     fun getSavedNews() = dao.getSavedNews()

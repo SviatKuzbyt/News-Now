@@ -7,7 +7,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsDBRepository
+import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
 
 
@@ -17,9 +17,9 @@ internal class SearchRepositoryTest{
     @Before
     fun setup() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val savedNewsDBRepository = SavedNewsDBRepository(appContext)
+        val savedNewsTableRepository = SavedNewsTableRepository(appContext)
         val dataSetting = DataSetting(appContext)
-        repository = SearchRepository(savedNewsDBRepository, dataSetting)
+        repository = SearchRepository(savedNewsTableRepository, dataSetting)
 
         runBlocking {
             launch {

@@ -4,23 +4,24 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import org.json.JSONObject
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsDBRepository
+import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
 import java.net.URL
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class NewsLoad(private val savedNewsDBRepository: SavedNewsDBRepository) {
+open class NewsLoad(private val savedNewsTableRepository: SavedNewsTableRepository) {
 
-    private lateinit var dataFormat: SimpleDateFormat
+    private val imageOptions = BitmapFactory.Options()
+    private val utcDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+    private val localDateFormat = SimpleDateFormat("MMM dd, hh:mm", Locale.getDefault())
+
     init {
-        initDataFormat()
+        imageOptions.inSampleSize = 2
+        utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 
-    private fun initDataFormat(){
-        dataFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        dataFormat.timeZone = TimeZone.getTimeZone("UTC")
-        dataFormat.timeZone = TimeZone.getDefault()
-    }
+
 
     fun getListFromUrl(link: String): NewsContainer {
         val urlResult = URL(link).readText()
@@ -29,18 +30,18 @@ open class NewsLoad(private val savedNewsDBRepository: SavedNewsDBRepository) {
         return NewsContainer(list, nextPage)
     }
 
-    private fun jsonConvert(text: String): MutableList<NewsList>{
+    private fun jsonConvert(text: String): MutableList<NewsList> {
         val list = mutableListOf<NewsList>()
         val json = JSONObject(text).getJSONArray("results")
 
-        for (i in 0 until json.length()){
+        for (i in 0 until json.length()) {
             val jsonObject = json.getJSONObject(i)
             list.add(
                 NewsList(
                     jsonObject.getString("title"),
                     jsonObject.getString("source_id"),
-                    getDate(jsonObject.getString("pubDate")),
-                    savedNewsDBRepository.isSaved(jsonObject.getString("link")),
+                    formatDate(jsonObject.getString("pubDate")),
+                    savedNewsTableRepository.isSaved(jsonObject.getString("link")),
                     loadImage(jsonObject.optString("image_url")),
                     jsonObject.getString("link")
                 )
@@ -49,22 +50,23 @@ open class NewsLoad(private val savedNewsDBRepository: SavedNewsDBRepository) {
         return list
     }
 
-    private fun getDate(text: String): String{
-        val date: Date = dataFormat.parse(text)!!
-        return dataFormat.format(date).subSequence(5, 16).toString()
-    }
+    private fun formatDate(dateString: String) = try {
+        val date = utcDateFormat.parse(dateString)
+        localDateFormat.format(date as Date)
+    } catch (e: ParseException) { "" }
+
 
     private fun loadImage(urlImage: String?): Bitmap? {
         return try {
             URL(urlImage).openStream().use {
-                BitmapFactory.decodeStream(it)
+                BitmapFactory.decodeStream(it, null, imageOptions)
             }
         } catch (e: Exception) {
             null
         }
     }
 
-    private fun getNextPage(text: String): String{
+    private fun getNextPage(text: String): String {
         val json = JSONObject(text)
         return json.getString("nextPage")
     }

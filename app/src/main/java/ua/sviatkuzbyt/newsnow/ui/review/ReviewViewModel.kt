@@ -1,98 +1,57 @@
 package ua.sviatkuzbyt.newsnow.ui.review
 
-//import android.app.Application
-//import androidx.lifecycle.AndroidViewModel
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.viewModelScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.launch
-//import ua.sviatkuzbyt.newsnow.data.other.NewsList
-//import ua.sviatkuzbyt.newsnow.data.repositories.SavedNewsDataBase
-//import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-//import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
-//
-//class ReviewViewModel(application: Application): AndroidViewModel(application) {
-//
-//    /**    VARIABLES    */
-//
-//    //repositories
-//    private lateinit var repository: ReviewRepository
-//    private val savedNewsDataBase: SavedNewsDataBase
-//    private val setting = DataSetting(application)
-//    //list
-//    private var _list = mutableListOf<NewsList>()
-//    //operators values
-//    var newElements = 0
-//    var oldSize = 0
-//    var loadMode = 1
-//    var loaded = false
-//    //observe values
-//    val list = MutableLiveData<List<NewsList>>(_list)
-//    val error = MutableLiveData<Boolean>()
-//
-//    /**    INIT    */
-//    init {
-//        //init data bases
-//
-//        savedNewsDataBase = SavedNewsDataBase(application)
-//        //repository = ReviewRepository(data)
-//        //start load
-//        firstUpdate()
-//    }
-//
-//    /**    PUBLIC FUNCTIONS    */
-//
-//    fun firstUpdate(){
-//        viewModelScope.launch(Dispatchers.IO){
-//            val lastNews = repository.getRecentlyNews(true, setting.getRegionCode())
-//
-//            if (lastNews != null){
-//                //change in local list
-//                oldSize = _list.size
-//                _list.clear()
-//                _list.addAll(lastNews)
-//
-//                //change in global list
-//                loaded = true
-//                newElements = lastNews.size
-//                list.postValue(_list)
-//
-//            } else error.postValue(true)
-//        }
-//    }
-//
-//    fun update(){
-//        viewModelScope.launch(Dispatchers.IO){
-//            val lastNews = repository.getRecentlyNews(false, setting.getRegionCode())
-//            if (lastNews != null){
-//                _list.addAll(lastNews) //change in local list
-//
-//                //change in global list
-//                loaded = true
-//                newElements = lastNews.size
-//                list.postValue(_list)
-//            }
-//
-//            else error.postValue(true)
-//        }
-//    }
-//
-//    fun addSavedNews(item: NewsList, updateSaved: Int){
-//        viewModelScope.launch(Dispatchers.IO){
-//            savedNewsDataBase.addSavedNews(item)
-//            _list[updateSaved].isSaved = true
-//        }
-//    }
-//    fun removeSavedNews(item: String, updateSaved: Int){
-//        viewModelScope.launch(Dispatchers.IO){
-//            savedNewsDataBase.removeSavedNews(item)
-//            _list[updateSaved].isSaved = false
-//
-//        }
-//    }
-//
-//    fun updateChanges() = viewModelScope.launch(Dispatchers.IO) {
-//        _list = repository.updateSaved(_list)
-//        list.postValue(_list)
-//    }
-//}
+import android.app.Application
+import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
+import ua.sviatkuzbyt.newsnow.data.other.NewsList
+import ua.sviatkuzbyt.newsnow.ui.elements.SingleLiveEvent
+
+sealed class ProgressBarMode {
+    object AnythingView: ProgressBarMode()
+    object RefreshView: ProgressBarMode()
+    object LoadMoreView: ProgressBarMode()
+}
+
+class ReviewViewModel (private val application: Application): AndroidViewModel(application){
+    val newsList = MutableLiveData<MutableList<NewsList>>()
+    val error = SingleLiveEvent<String>()
+    var progressBarMode = MutableLiveData<ProgressBarMode>()
+    var isAllDataNew = true
+
+    private val savedNewsTableRepository = SavedNewsTableRepository(application) //temp
+    private val dataSetting = DataSetting(application) //temp
+    private val repository = ReviewRepository(savedNewsTableRepository, dataSetting)
+
+    init {
+        loadNewNews()
+    }
+
+    fun loadNewNews() = viewModelScope.launch(Dispatchers.IO + handleException()){
+        progressBarMode.postValue(ProgressBarMode.RefreshView)
+        val list = repository.loadNewList()
+        progressBarMode.postValue(ProgressBarMode.AnythingView)
+        isAllDataNew = true
+        newsList.postValue(list)
+    }
+
+    fun loadMoreNews() = viewModelScope.launch(Dispatchers.IO + handleException()){
+        progressBarMode.postValue(ProgressBarMode.LoadMoreView)
+        val list = repository.loadMoreListList(newsList.value!!)
+        progressBarMode.postValue(ProgressBarMode.AnythingView)
+        isAllDataNew = false
+        newsList.postValue(list)
+    }
+
+    private fun handleException(): CoroutineExceptionHandler {
+        return CoroutineExceptionHandler { _, _ ->
+            progressBarMode.postValue(ProgressBarMode.AnythingView)
+            error.postValue(application.getString(R.string.internet_error))
+        }
+    }
+}
