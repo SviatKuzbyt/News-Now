@@ -2,6 +2,9 @@ package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
@@ -21,31 +24,32 @@ open class NewsLoad(private val savedNewsTableRepository: SavedNewsTableReposito
         utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
     }
 
-
-
-    fun getListFromUrl(link: String): NewsContainer {
+    suspend fun getListFromUrl(link: String): NewsContainer {
         val urlResult = URL(link).readText()
         val list = jsonConvert(urlResult)
         val nextPage = getNextPage(urlResult)
         return NewsContainer(list, nextPage)
     }
 
-    private fun jsonConvert(text: String): MutableList<NewsList> {
+    private suspend fun jsonConvert(text: String): MutableList<NewsList> {
         val list = mutableListOf<NewsList>()
-        val json = JSONObject(text).getJSONArray("results")
-
-        for (i in 0 until json.length()) {
-            val jsonObject = json.getJSONObject(i)
-            list.add(
-                NewsList(
-                    jsonObject.getString("title"),
-                    jsonObject.getString("source_id"),
-                    formatDate(jsonObject.getString("pubDate")),
-                    savedNewsTableRepository.isSaved(jsonObject.getString("link")),
-                    loadImage(jsonObject.optString("image_url")),
-                    jsonObject.getString("link")
-                )
-            )
+        withContext(Dispatchers.IO){
+            val json = JSONObject(text).getJSONArray("results")
+            for (i in 0 until json.length()) {
+                if(isActive){
+                    val jsonObject = json.getJSONObject(i)
+                    list.add(
+                        NewsList(
+                            jsonObject.getString("title"),
+                            jsonObject.getString("source_id"),
+                            formatDate(jsonObject.getString("pubDate")),
+                            savedNewsTableRepository.isSaved(jsonObject.getString("link")),
+                            loadImage(jsonObject.optString("image_url")),
+                            jsonObject.getString("link")
+                        )
+                    )
+                }
+            }
         }
         return list
     }

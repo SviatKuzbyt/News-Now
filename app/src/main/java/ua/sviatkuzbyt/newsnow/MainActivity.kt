@@ -12,10 +12,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //level-up vars
 val Context.dataStore by preferencesDataStore(name = "settings")
-//var changeSavedNews = false
-//var changeSavedNewsForReview = false
-//var changeSavedNewsForSearch = false
-//var changeSetting: String? = null
+var changeSavedNews = false
+var changeSavedNewsForReview = false
+var changeSavedNewsForSearch = false
+var changeSetting: String? = null
 
 class MainActivity : AppCompatActivity() {
 

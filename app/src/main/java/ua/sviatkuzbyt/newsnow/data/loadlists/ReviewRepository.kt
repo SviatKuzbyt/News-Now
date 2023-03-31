@@ -26,7 +26,7 @@ class ReviewRepository(
         return news.newsList
     }
 
-    fun loadMoreListList(list: MutableList<NewsList>): MutableList<NewsList>{
+    suspend fun loadMoreListList(list: MutableList<NewsList>): MutableList<NewsList>{
         val news = getListFromUrl(link + region + nextPage)
         nextPage = "&page=" + news.nextPage
         list.addAll(news.newsList)

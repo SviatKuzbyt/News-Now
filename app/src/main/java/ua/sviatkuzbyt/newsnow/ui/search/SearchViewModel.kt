@@ -1,138 +1,60 @@
-//package ua.sviatkuzbyt.newsnow.ui.search
-//
-//import android.app.Application
-//import androidx.lifecycle.AndroidViewModel
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.viewModelScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.launch
-//import ua.sviatkuzbyt.newsnow.data.other.NewsList
-//import ua.sviatkuzbyt.newsnow.data.repositories.SavedNewsDataBase
-//import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-//import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
-//
-//class SearchViewModel(application: Application): AndroidViewModel(application) {
-//
-//    /**    VARIABLES    */
-//
-//    //repositories
-//    private lateinit var repository: SearchRepository
-//    private lateinit var savedNewsDataBase: SavedNewsDataBase
-//    val setting = DataSetting(application)
-//    //private vars
-//    private var _listSearch = mutableListOf<NewsList>()
-//    private val _listHistory = mutableListOf<String>()
-//    private var lastSearch = ""
-//    //observe values
-//    val listSearch = MutableLiveData<List<NewsList>>(_listSearch)
-//    val listHistory = MutableLiveData<List<String>>(_listHistory)
-//    val error = MutableLiveData<Int>()
-//    //control changes
-//    var oldSizeSearch = 0
-//    var oldSizeHistory = 0
-//    var deleteHistory = 0
-//    //mods
-//    var updatingSearch = false
-//    var loadMore = false
-//    var loadModeSearch = 0
-//    var changeHistoryMode = 0
-//
-//    /**    INIT    */
-//    init {
-//        //create repositories
-////        val data = NewsDataBase.getDatabase(application).request()
-////        dataRepository = DataRepository(data, application)
-////        repository = SearchRepository(data)
-//
-//        //get history data
-//        viewModelScope.launch(Dispatchers.IO){
-//            _listHistory.addAll(savedNewsDataBase.getHistory())
-//            oldSizeHistory = _listHistory.size
-//            listHistory.postValue(_listHistory)
-//        }
-//    }
-//
-//    /**    PUBLIC FUNCTIONS    */
-//
-//    fun getNews(q: String = lastSearch) = viewModelScope.launch(Dispatchers.IO) {
-//        if (updatingSearch) error.postValue(3)
-//        else{
-//            //start load
-//            updatingSearch = true
-//            val news = repository.search(q, setting.getLanguageCode(), true)
-//            //exceptions handling
-//            if (news == null) error.postValue(1)
-//            else if (news.isEmpty()) error.postValue(2)
-//
-//            //put news
-//            else{
-//                //delete the last same search in history
-//                if (q in _listHistory) deleteHistory(q, _listHistory.indexOf(q))
-//
-//                //add new search in history
-//                savedNewsDataBase.addHistory(q)
-//                _listHistory.add(0, q)
-//                changeHistoryMode = 1
-//                listHistory.postValue(_listHistory)
-//
-//                //change operators values
-//                oldSizeSearch = _listSearch.size
-//                lastSearch = q
-//                loadModeSearch = 1
-//
-//                //publish news
-//                _listSearch.clear()
-//                _listSearch.addAll(news)
-//                listSearch.postValue(_listSearch)
-//            }
-//        }
-//
-//    }
-//
-//    fun loadMoreNews() = viewModelScope.launch(Dispatchers.IO){
-//        //load news
-//        updatingSearch = true
-//        val news = repository.search(lastSearch, setting.getLanguageCode(), false)
-//
-//        if (news != null && news.isNotEmpty()){
-//            //change operators values
-//            oldSizeSearch = _listSearch.size
-//            loadModeSearch = 2
-//
-//            //publish news
-//            _listSearch.addAll(news)
-//            listSearch.postValue(_listSearch)
-//        }
-//        //exception handling
-//        else error.postValue(3)
-//    }
-//
-//    fun addSavedNews(item: NewsList, updateSaved: Int){
-//        viewModelScope.launch(Dispatchers.IO){
-//            savedNewsDataBase.addSavedNews(item)
-//            _listSearch[updateSaved].isSaved = true
-//        }
-//    }
-//
-//    fun removeSavedNews(item: String, updateSaved: Int){
-//        viewModelScope.launch(Dispatchers.IO){
-//            savedNewsDataBase.removeSavedNews(item)
-//            _listSearch[updateSaved].isSaved = false
-//        }
-//    }
-//
-//    fun deleteHistory(history: String, id: Int) = viewModelScope.launch(Dispatchers.IO) {
-//        //delete history
-//        savedNewsDataBase.deleteHistory(history)
-//        _listHistory.removeAt(id)
-//        //update view
-//        changeHistoryMode = 2
-//        deleteHistory = id
-//        listHistory.postValue(_listHistory)
-//    }
-//
-//    fun updateChanges() = viewModelScope.launch(Dispatchers.IO) {
-//        _listSearch = repository.updateSaved(_listSearch)
-//        listSearch.postValue(_listSearch)
-//    }
-//}
+package ua.sviatkuzbyt.newsnow.ui.search
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.*
+import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
+import ua.sviatkuzbyt.newsnow.data.other.NewsList
+import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
+import ua.sviatkuzbyt.newsnow.ui.elements.SingleLiveEvent
+
+class SearchViewModel(private val application: Application): AndroidViewModel(application){
+    val newsList = MutableLiveData<MutableList<NewsList>>()
+    val error = SingleLiveEvent<String>()
+    var progressBarMode = MutableLiveData<ProgressBarMode>()
+    var isAllDataNew = true
+
+    private val savedNewsTableRepository = SavedNewsTableRepository(application) //temp
+    private val repository = SearchRepository(savedNewsTableRepository)
+    private var loadNews: Job? = null
+
+    fun loadNewNews(request: String) {
+        cancelAndLoadNews {
+            progressBarMode.postValue(ProgressBarMode.LoadNew)
+            val list = repository.loadNewList(request)
+            newsList.postValue(list)
+        }
+    }
+
+    fun loadMoreNews() {
+        cancelAndLoadNews {
+            progressBarMode.postValue(ProgressBarMode.LoadMore)
+            val list = repository.loadMoreListList(newsList.value!!)
+            progressBarMode.postValue(ProgressBarMode.Nothing)
+            isAllDataNew = false
+            newsList.postValue(list)
+        }
+    }
+
+    private fun cancelAndLoadNews(operation: suspend () -> Unit) {
+        loadNews?.cancel()
+        loadNews = viewModelScope.launch(Dispatchers.IO + handleException()) {
+            operation()
+            progressBarMode.postValue(ProgressBarMode.Nothing)
+        }
+    }
+
+    private fun handleException(): CoroutineExceptionHandler {
+        return CoroutineExceptionHandler { _, throwable ->
+            progressBarMode.postValue(ProgressBarMode.Nothing)
+            val message =
+                if(throwable.message == "No more result") application.getString(R.string.no_more_result)
+                else application.getString(R.string.internet_error)
+            error.postValue(message)
+        }
+    }
+}

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
@@ -17,6 +18,7 @@ import ua.sviatkuzbyt.newsnow.data.other.NewsList
 
 class NewsListAdapter(private var dataSet: MutableList<NewsList>,
                       private val context: Context,
+                      private val largeFirstItem: Boolean
 ) : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,6 +28,7 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
         val timeNewsTextView: TextView
         val saveNewsButton: Button
         val shareNewsButton: Button
+        val cardViewRecycle: CardView
 
         init {
             imageNewsImageView = view.findViewById(R.id.imageNewsRecycle)
@@ -34,12 +37,13 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
             timeNewsTextView = view.findViewById(R.id.timeNewsRecycle)
             saveNewsButton = view.findViewById(R.id.saveNewsRecycle)
             shareNewsButton = view.findViewById(R.id.shareNewsRecycle)
+            cardViewRecycle = view.findViewById(R.id.cardViewRecycle)
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val layout =
-            if (viewType == 1) R.layout.recycle_news_main
+            if (viewType == 1 && largeFirstItem) R.layout.recycle_news_main
             else R.layout.recycle_news
 
         val view = LayoutInflater.from(viewGroup.context).inflate(layout, viewGroup, false)
@@ -47,7 +51,11 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.imageNewsImageView.setImageBitmap(dataSet[position].image)
+        val image = dataSet[position].image
+        if (image == null) viewHolder.cardViewRecycle.visibility = View.GONE
+        else viewHolder.imageNewsImageView.setImageBitmap(image)
+
+
         viewHolder.sourceNewsTextView.text = dataSet[position].source
         viewHolder.labelNewsTextView.text = dataSet[position].label
         viewHolder.timeNewsTextView.text = dataSet[position].time
@@ -95,5 +103,9 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
         val itemCount = data.size
         dataSet.addAll(data.slice(startPosition until itemCount))
         notifyItemRangeInserted(startPosition, itemCount)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) 1 else 0
     }
 }

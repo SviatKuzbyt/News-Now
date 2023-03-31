@@ -1,5 +1,7 @@
 package ua.sviatkuzbyt.newsnow.ui.review
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -10,8 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.color.MaterialColors
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
+import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
 
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
@@ -29,10 +33,11 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         setViewModel()
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun setViews(view: View){
         recycleViewReview = view.findViewById(R.id.recycleViewReview)
         recycleViewReview.layoutManager = LinearLayoutManager(activity)
-        adapter = NewsListAdapter(mutableListOf(), requireActivity())
+        adapter = NewsListAdapter(mutableListOf(), requireActivity(), true)
         recycleViewReview.adapter = adapter
 
         progressBarLoadMore = view.findViewById(R.id.progressBarLoadMore)
@@ -40,6 +45,9 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         refreshReview = view.findViewById(R.id.refreshReview)
         refreshReview.setColorSchemeResources(R.color.blue)
+        val color = MaterialColors.getColor(requireContext(), android.R.attr.windowBackground, Color.WHITE)
+        refreshReview.setProgressBackgroundColorSchemeColor(color)
+
     }
 
     private fun setListeners(){
@@ -51,7 +59,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
                 if (
                     lastVisibleItemPosition == recyclerView.adapter?.itemCount?.minus(1)
-                    && viewModel.progressBarMode.value == ProgressBarMode.AnythingView
+                    && viewModel.progressBarMode.value == ProgressBarMode.Nothing
                 ) {
                     viewModel.loadMoreNews()
                 }
@@ -76,9 +84,9 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
         viewModel.progressBarMode.observe(viewLifecycleOwner) {
             when(it){
-                ProgressBarMode.LoadMoreView -> progressBarLoadMore.visibility = View.VISIBLE
-                ProgressBarMode.RefreshView -> refreshReview.isRefreshing = true
-                ProgressBarMode.AnythingView -> hideViews()
+                ProgressBarMode.LoadMore -> progressBarLoadMore.visibility = View.VISIBLE
+                ProgressBarMode.LoadNew -> refreshReview.isRefreshing = true
+                ProgressBarMode.Nothing -> hideViews()
             }
         }
 

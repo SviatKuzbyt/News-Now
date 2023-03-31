@@ -7,18 +7,18 @@
     tools:context=".ui.search.SearchFragment"
     android:animateLayoutChanges="true">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyRecycle"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescription"
-        app:layout_constraintVertical_bias="1.0" />
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/historyRecycle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textDescription"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 
     <ua.sviatkuzbyt.newsnow.ui.elements.SearchEditText
         android:id="@+id/editTextSearch"
@@ -45,21 +45,21 @@
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/inter_bold"
         android:text="@string/search_history"
         android:textColor="?colorOnPrimary"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/progressBarSearch"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        android:layout_marginStart="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleSearch"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,17 +71,6 @@
 
     <ProgressBar
         android:id="@+id/progressBarSearch"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/textDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textDescription" />
-
-    <ProgressBar
-        android:id="@+id/progressBarLoadSearch"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="10dp"
@@ -89,7 +78,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:indeterminate="true"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/clearButton"
