@@ -7,7 +7,6 @@
     <string name="internet_error">加载错误，稍后再试</string>
     <string name="search_hint">输入搜索查询...</string>
     <string name="search_result">结果</string>
-    <string name="search_history">历史</string>
     <string name="searching">正在搜索…</string>
     <string name="no_results">没有结果</string>
     <string name="no_more_result">没有更多的结果</string>

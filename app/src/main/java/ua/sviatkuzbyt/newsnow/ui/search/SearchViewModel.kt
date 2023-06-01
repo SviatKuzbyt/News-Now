@@ -1,25 +1,25 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
+import ua.sviatkuzbyt.newsnow.ui.elements.NewsViewModel
 import ua.sviatkuzbyt.newsnow.ui.elements.SingleLiveEvent
 
-class SearchViewModel(private val application: Application): AndroidViewModel(application){
+class SearchViewModel(private val application: Application): NewsViewModel(application){
     val newsList = MutableLiveData<MutableList<NewsList>>()
     val error = SingleLiveEvent<String>()
     var progressBarMode = MutableLiveData<ProgressBarMode>()
     var isAllDataNew = true
 
-    private val savedNewsTableRepository = SavedNewsTableRepository(application) //temp
-    private val repository = SearchRepository(savedNewsTableRepository)
+    val dataBaseRepository = DataBaseRepository(application) //temp
+    private val repository = SearchRepository(dataBaseRepository)
     private var loadNews: Job? = null
 
     fun loadNewNews(request: String) {

@@ -4,11 +4,11 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 
 
-internal class SavedNewsTableRepositoryTest{
-    private lateinit var savedNewsTableRepository: SavedNewsTableRepository
+internal class DataBaseRepositoryTest{
+    private lateinit var dataBaseRepository: DataBaseRepository
     private val news = NewsList(
         "testNews",
         "translate",
@@ -22,20 +22,20 @@ internal class SavedNewsTableRepositoryTest{
     @Before
     fun setup() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        savedNewsTableRepository = SavedNewsTableRepository(appContext)
+        dataBaseRepository = DataBaseRepository(appContext)
     }
 
     @Test
     fun addSaveNews(){
-        savedNewsTableRepository.addSavedNews(news)
-        val lastElementInDB = savedNewsTableRepository.getSavedNews()[0]
+        dataBaseRepository.addSavedNews(news)
+        val lastElementInDB = dataBaseRepository.getSavedNews()[0]
         Assert.assertEquals(news.label, lastElementInDB.label)
     }
 
     @Test
     fun removeSavedNews(){
-        savedNewsTableRepository.removeSavedNews(news.link)
-        val list = savedNewsTableRepository.getSavedNews()
+        dataBaseRepository.removeSavedNews(news.link)
+        val list = dataBaseRepository.getSavedNews()
 
         var isSavedNews = false
         for (i in list){

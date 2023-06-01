@@ -7,7 +7,6 @@
     <string name="internet_error">Load error, try later</string>
     <string name="search_hint">Enter a search query…</string>
     <string name="search_result">Results</string>
-    <string name="search_history">History</string>
     <string name="searching">Searching…</string>
     <string name="no_results">No results</string>
     <string name="no_more_result">No more result</string>
@@ -23,7 +22,7 @@
     <string name="information_content">News Now is an application for viewing the latest, current news around the world. In addition, it provides a service for searching and saving articles</string>
     <string name="information_content_two" >Demo application. Sviat Kuzbyt. November 2022</string>
     <string name="information_label" >Information</string>
-    <string name="no_saved">There are no saved news</string>
+    <string name="no_saved">Оновіть сторінку, щоб переглянути поточні збереження</string>
 
     <string name="links" translatable="false"><a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
     <string name="undo" translatable="false">Back</string>

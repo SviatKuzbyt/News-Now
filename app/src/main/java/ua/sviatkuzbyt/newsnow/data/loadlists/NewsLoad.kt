@@ -7,13 +7,13 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import java.net.URL
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class NewsLoad(private val savedNewsTableRepository: SavedNewsTableRepository) {
+open class NewsLoad(private val dataBaseRepository: DataBaseRepository) {
 
     private val imageOptions = BitmapFactory.Options()
     private val utcDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
@@ -43,7 +43,7 @@ open class NewsLoad(private val savedNewsTableRepository: SavedNewsTableReposito
                             jsonObject.getString("title"),
                             jsonObject.getString("source_id"),
                             formatDate(jsonObject.getString("pubDate")),
-                            savedNewsTableRepository.isSaved(jsonObject.getString("link")),
+                            dataBaseRepository.isSaved(jsonObject.getString("link")),
                             loadImage(jsonObject.optString("image_url")),
                             jsonObject.getString("link")
                         )

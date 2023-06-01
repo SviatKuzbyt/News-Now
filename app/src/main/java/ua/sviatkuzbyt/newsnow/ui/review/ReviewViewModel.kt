@@ -7,21 +7,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
+import ua.sviatkuzbyt.newsnow.ui.elements.NewsViewModel
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
 import ua.sviatkuzbyt.newsnow.ui.elements.SingleLiveEvent
 
-class ReviewViewModel (private val application: Application): AndroidViewModel(application){
+class ReviewViewModel (private val application: Application): NewsViewModel(application){
     val newsList = MutableLiveData<MutableList<NewsList>>()
     val error = SingleLiveEvent<String>()
     var progressBarMode = MutableLiveData<ProgressBarMode>()
     var isAllDataNew = true
 
-    private val savedNewsTableRepository = SavedNewsTableRepository(application) //temp
     private val dataSetting = DataSetting(application) //temp
-    private val repository = ReviewRepository(savedNewsTableRepository, dataSetting)
+    private val repository = ReviewRepository(savedNewsRepository, dataSetting)
 
     init {
         loadNewNews()

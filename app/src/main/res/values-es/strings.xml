@@ -7,7 +7,6 @@
     <string name="internet_error">Error de carga, intente más tarde</string>
     <string name="search_hint">Introduzca una consulta de búsqueda...</string>
     <string name="search_result">Resultados</string>
-    <string name="search_history">Historia</string>
     <string name="searching">Buscando…</string>
     <string name="no_results">No hay resultados</string>
     <string name="no_more_result">No más resultado</string>

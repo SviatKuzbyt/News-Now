@@ -37,7 +37,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     private fun setViews(view: View){
         recycleViewReview = view.findViewById(R.id.recycleViewReview)
         recycleViewReview.layoutManager = LinearLayoutManager(activity)
-        adapter = NewsListAdapter(mutableListOf(), requireActivity(), true)
+        adapter = NewsListAdapter(mutableListOf(), requireActivity(), true, viewModel)
         recycleViewReview.adapter = adapter
 
         progressBarLoadMore = view.findViewById(R.id.progressBarLoadMore)

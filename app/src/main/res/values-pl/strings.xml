@@ -7,7 +7,6 @@
     <string name="internet_error">Błąd ładowania, spróbuj później</string>
     <string name="search_hint">Wpisz zapytanie wyszukiwania…</string>
     <string name="search_result">Wyniki</string>
-    <string name="search_history">Historia</string>
     <string name="searching">Badawczy…</string>
     <string name="no_results">Brak wyników</string>
     <string name="no_more_result">Brak wyników</string>

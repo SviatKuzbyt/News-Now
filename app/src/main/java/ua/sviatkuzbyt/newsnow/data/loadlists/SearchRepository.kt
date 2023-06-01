@@ -1,11 +1,11 @@
 package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 
 class SearchRepository(
-    savedNewsTableRepository: SavedNewsTableRepository
-): NewsLoad(savedNewsTableRepository) {
+    dataBaseRepository: DataBaseRepository
+): NewsLoad(dataBaseRepository) {
     private val link = "https://newsdata.io/api/1/news?apikey=pub_11792063ac011beca171231a9b2ae554997ba"
 
     private var nextPage = ""

@@ -18,7 +18,8 @@ import ua.sviatkuzbyt.newsnow.data.other.NewsList
 
 class NewsListAdapter(private var dataSet: MutableList<NewsList>,
                       private val context: Context,
-                      private val largeFirstItem: Boolean
+                      private val largeFirstItem: Boolean,
+                      private val viewModel: NewsViewModel
 ) : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -87,6 +88,19 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
             } catch (e: Exception){
                 Toast.makeText(context, "App don't founded for this action", Toast.LENGTH_LONG).show()
             }
+        }
+
+        viewHolder.saveNewsButton.setOnClickListener {
+            val item = dataSet[position]
+                if(item.isSaved){
+                    viewModel.removeSavedNews(item.link)
+                    it.setBackgroundResource(R.drawable.ic_saved_gray)
+                    item.isSaved = false
+                } else{
+                    viewModel.addSavedNews(item)
+                    it.setBackgroundResource(R.drawable.ic_saved_blue)
+                    item.isSaved = true
+                }
         }
     }
 

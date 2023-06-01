@@ -7,7 +7,6 @@
     <string name="internet_error">読み込みエラーです。後で試してください</string>
     <string name="search_hint">検索クエリを入力してください…</string>
     <string name="search_result">結果</string>
-    <string name="search_history">歴史</string>
     <string name="searching">検索中…</string>
     <string name="no_results">結果がありません</string>
     <string name="no_more_result">これ以上の結果はありません</string>

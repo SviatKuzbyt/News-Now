@@ -7,7 +7,6 @@
     <string name="internet_error">Помилка завантаження, спробуйте пізніше</string>
     <string name="search_hint">Введіть пошуковий запит…</string>
     <string name="search_result">Результати</string>
-    <string name="search_history">Історія</string>
     <string name="searching">Пошук…</string>
     <string name="no_results">Немає результатів</string>
     <string name="no_more_result">Немає більше результатів</string>

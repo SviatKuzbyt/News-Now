@@ -7,7 +7,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import ua.sviatkuzbyt.newsnow.data.loadlists.NewsLoad
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 
 internal class NewsLoadTest{
@@ -16,8 +16,8 @@ internal class NewsLoadTest{
     @Before
     fun init(){
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val savedNewsTableRepository = SavedNewsTableRepository(appContext)
-        newsLoad = NewsLoad(savedNewsTableRepository)
+        val dataBaseRepository = DataBaseRepository(appContext)
+        newsLoad = NewsLoad(dataBaseRepository)
     }
 
     @Test

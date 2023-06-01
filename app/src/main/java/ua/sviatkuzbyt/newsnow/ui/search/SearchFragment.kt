@@ -22,7 +22,7 @@ class SearchFragment : Fragment(R.layout.fragment_search){
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSearchBinding.bind(view)
 
-        adapter = NewsListAdapter(mutableListOf(), requireContext(), false)
+        adapter = NewsListAdapter(mutableListOf(), requireContext(), false, viewModel)
         binding.recycleSearch.layoutManager = LinearLayoutManager(requireContext())
         binding.recycleSearch.adapter = adapter
 
@@ -55,11 +55,9 @@ class SearchFragment : Fragment(R.layout.fragment_search){
             when(mode) {
                 ProgressBarMode.Nothing -> {
                     binding.progressBarSearch.visibility = View.INVISIBLE
-                    binding.textDescription.text = getString(R.string.search_result)
                 }
                 else -> {
                     binding.progressBarSearch.visibility = View.VISIBLE
-                    binding.textDescription.text = getString(R.string.searching)
                 }
             }
         }

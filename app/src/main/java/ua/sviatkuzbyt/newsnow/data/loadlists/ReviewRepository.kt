@@ -2,13 +2,13 @@ package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import ua.sviatkuzbyt.newsnow.data.database.DataSetting
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 
 class ReviewRepository(
-    savedNewsTableRepository: SavedNewsTableRepository,
+    dataBaseRepository: DataBaseRepository,
     private val dataSetting: DataSetting
 ):
-    NewsLoad(savedNewsTableRepository){
+    NewsLoad(dataBaseRepository){
 
     private val link = "https://newsdata.io/api/1/news?apikey=pub_11792063ac011beca171231a9b2ae554997ba"
     private var region = ""

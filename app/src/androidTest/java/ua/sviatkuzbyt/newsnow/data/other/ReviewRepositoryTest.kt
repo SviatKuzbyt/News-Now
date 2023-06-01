@@ -7,7 +7,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-import ua.sviatkuzbyt.newsnow.data.database.SavedNewsTableRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
 
 internal class ReviewRepositoryTest{
@@ -16,9 +16,9 @@ internal class ReviewRepositoryTest{
     @Before
     fun setup() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val savedNewsTableRepository = SavedNewsTableRepository(appContext)
+        val dataBaseRepository = DataBaseRepository(appContext)
         val dataSetting = DataSetting(appContext)
-        reviewRepository = ReviewRepository(savedNewsTableRepository, dataSetting)
+        reviewRepository = ReviewRepository(dataBaseRepository, dataSetting)
     }
 
     @Test

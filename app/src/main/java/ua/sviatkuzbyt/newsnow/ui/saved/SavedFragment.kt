@@ -1,5 +1,6 @@
 package ua.sviatkuzbyt.newsnow.ui.saved
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,63 +8,40 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.changeSavedNews
+import ua.sviatkuzbyt.newsnow.databinding.FragmentSavedBinding
+import ua.sviatkuzbyt.newsnow.databinding.FragmentSearchBinding
+import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
 
-class SavedFragment : Fragment() {
+class SavedFragment : Fragment(R.layout.fragment_saved) {
 
-//    lateinit var viewModel: SavedViewModel
-//    lateinit var adapter: SavedAdapter
+    private lateinit var binding: FragmentSavedBinding
+    private val viewModel by viewModels<SavedViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        //Created ViewModel
-//        viewModel = ViewModelProvider(this)[SavedViewModel::class.java]
-        return inflater.inflate(R.layout.fragment_saved, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSavedBinding.bind(view)
+
+        binding.savedRefresh.setColorSchemeResources(R.color.blue)
+        val color = MaterialColors.getColor(requireContext(), android.R.attr.windowBackground, Color.WHITE)
+        binding.savedRefresh.setProgressBackgroundColorSchemeColor(color)
+        binding.savedRefresh.setOnRefreshListener {
+            viewModel.loadSavedList()
+            binding.savedRefresh.isRefreshing = false
+        }
+
+        val recyclerAdapter = NewsListAdapter(mutableListOf(), requireContext(), false, viewModel)
+        binding.recycleViewSaved.layoutManager = LinearLayoutManager(activity)
+        binding.recycleViewSaved.adapter = recyclerAdapter
+        viewModel.savedList.observe(viewLifecycleOwner){
+            recyclerAdapter.updateData(it)
+        }
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//
-//        /**    INITIALIZATION VIEWS    */
-//        val textNoSaved = view.findViewById<TextView>(R.id.textNoSaved)
-//        //recyclerView
-//        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleViewSaved)
-//        recyclerView.layoutManager = LinearLayoutManager(activity)
-//
-//        /**   CODE ON START FRAGMENT    */
-//        //update saved news, when we add/delete saved news from another fragment
-//        if (changeSavedNews){
-//            viewModel.updateSavedNews()
-//            changeSavedNews = false
-//        }
-//
-//        /**    OBSERVES    */
-//        //list
-//        viewModel.list.observe(viewLifecycleOwner){
-//            if (it.isNotEmpty()){
-//                //set adapter and elements
-//                adapter = SavedAdapter(viewModel.list.value!!, requireActivity(), viewModel)
-//                recyclerView.adapter = adapter
-//
-//                //change textNoSaved
-//                if (textNoSaved.isVisible) textNoSaved.visibility = View.GONE
-//            } else textNoSaved.visibility = View.VISIBLE
-//        }
-//
-//        //delete
-//        viewModel.deleteElement.observe(viewLifecycleOwner){
-//            if (it != null){
-//                adapter.notifyItemRemoved(it)
-//                adapter.notifyItemRangeChanged(it, viewModel.list.value!!.size)
-//                viewModel.deleteElement.value = null
-//            }
-//        }
-//
-//        super.onViewCreated(view, savedInstanceState)
-//    }
 }
