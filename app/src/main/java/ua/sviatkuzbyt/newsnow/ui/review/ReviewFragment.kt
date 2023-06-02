@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
 
-    private val viewModel by viewModels<ReviewViewModel>()
+    private val viewModel: ReviewViewModel by viewModels()
     private lateinit var recycleViewReview: RecyclerView
     private lateinit var progressBarLoadMore: ProgressBar
     private lateinit var refreshReview: SwipeRefreshLayout

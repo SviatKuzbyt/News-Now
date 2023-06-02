@@ -34,7 +34,7 @@ internal class DataBaseRepositoryTest{
 
     @Test
     fun removeSavedNews(){
-        dataBaseRepository.removeSavedNews(news.link)
+        dataBaseRepository.remove(news.link)
         val list = dataBaseRepository.getSavedNews()
 
         var isSavedNews = false

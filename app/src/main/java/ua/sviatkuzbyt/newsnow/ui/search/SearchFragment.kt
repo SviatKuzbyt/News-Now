@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
 import ua.sviatkuzbyt.newsnow.ui.elements.hideKeyboardFrom
 
 class SearchFragment : Fragment(R.layout.fragment_search){
-    private val viewModel by viewModels<SearchViewModel>()
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: FragmentSearchBinding
     private lateinit var adapter: NewsListAdapter
 

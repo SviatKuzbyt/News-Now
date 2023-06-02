@@ -24,6 +24,7 @@ class ReviewViewModel (private val application: Application): NewsViewModel(appl
 
     init {
         loadNewNews()
+        test = "dasfdsfdfs"
     }
 
     fun loadNewNews() = viewModelScope.launch(Dispatchers.IO + handleException()){

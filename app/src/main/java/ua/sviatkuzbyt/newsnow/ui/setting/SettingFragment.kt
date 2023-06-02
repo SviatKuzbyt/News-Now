@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.changeSetting
 //import ua.sviatkuzbyt.newsnow.ui.elements.adapters.SettingAdapter
 
 class SettingFragment : Fragment() {

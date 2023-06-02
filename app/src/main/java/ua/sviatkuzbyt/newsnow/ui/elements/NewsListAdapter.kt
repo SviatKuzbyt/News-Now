@@ -92,15 +92,15 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
 
         viewHolder.saveNewsButton.setOnClickListener {
             val item = dataSet[position]
-                if(item.isSaved){
-                    viewModel.removeSavedNews(item.link)
-                    it.setBackgroundResource(R.drawable.ic_saved_gray)
-                    item.isSaved = false
-                } else{
-                    viewModel.addSavedNews(item)
-                    it.setBackgroundResource(R.drawable.ic_saved_blue)
-                    item.isSaved = true
-                }
+            if(item.isSaved){
+                viewModel.removeSavedNews(item.link)
+                it.setBackgroundResource(R.drawable.ic_saved_gray)
+                item.isSaved = false
+            } else{
+                viewModel.addSavedNews(item)
+                it.setBackgroundResource(R.drawable.ic_saved_blue)
+                item.isSaved = true
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import android.content.Context
+import ua.sviatkuzbyt.newsnow.changeSaves
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.room.NewsDataBase
 import ua.sviatkuzbyt.newsnow.data.database.room.SavedNewsEntity
@@ -8,9 +9,13 @@ import ua.sviatkuzbyt.newsnow.data.database.room.SavedNewsEntity
 class DataBaseRepository(context: Context) {
     private val dao = NewsDataBase.getInstance(context).dao()
 
-    fun getSavedNews() = dao.getSavedNews()
+    fun getSavedNews(): MutableList<SavedNewsEntity>{
+        changeSaves = false
+        return dao.getSavedNews()
+    }
 
     fun addSavedNews(item: NewsList){
+        changeSaves = true
         dao.addSaveNews(
             SavedNewsEntity(
                 0,
@@ -22,7 +27,8 @@ class DataBaseRepository(context: Context) {
         )
     }
 
-    fun removeSavedNews(item: String){
+    fun remove(item: String){
+        changeSaves = true
         dao.deleteSaveNews(item)
     }
 

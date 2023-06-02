@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow
 
 import android.content.Context
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.findNavController
@@ -9,13 +10,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ua.sviatkuzbyt.newsnow.ui.elements.NewsViewModel
 
 //level-up vars
 val Context.dataStore by preferencesDataStore(name = "settings")
-var changeSavedNews = false
-var changeSavedNewsForReview = false
-var changeSavedNewsForSearch = false
-var changeSetting: String? = null
+var changeSaves = true
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,6 +1,7 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
@@ -22,6 +23,9 @@ class SearchViewModel(private val application: Application): NewsViewModel(appli
     private val repository = SearchRepository(dataBaseRepository)
     private var loadNews: Job? = null
 
+    init {
+        Log.v("apptest", test)
+    }
     fun loadNewNews(request: String) {
         cancelAndLoadNews {
             progressBarMode.postValue(ProgressBarMode.LoadNew)

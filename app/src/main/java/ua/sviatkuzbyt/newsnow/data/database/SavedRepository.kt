@@ -23,4 +23,9 @@ class SavedRepository(private val db: DataBaseRepository) {
 
         return listResult
     }
+
+    fun removeItem(link: String){
+        db.remove(link)
+    }
+
 }
