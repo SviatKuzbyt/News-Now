@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.color.MaterialColors
 import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.ui.SharedData
 import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
 
@@ -32,6 +33,9 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         setViews(view)
         setListeners()
         setViewModel()
+
+        if(SharedData.isChangeRegion)
+            viewModel.loadNewNews()
     }
 
     @SuppressLint("ResourceAsColor")
@@ -74,13 +78,17 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
     private fun setViewModel(){
         viewModel.newsList.observe(viewLifecycleOwner) {
-            adapter.apply {
-                if (viewModel.isAllDataNew) updateData(it)
-                else{
-                    addData(it)
-                    viewModel.isAllDataNew = true
+            if(it.isEmpty()) viewModel.loadNewNews()
+            else{
+                adapter.apply {
+                    if (viewModel.isAllDataNew) updateData(it)
+                    else{
+                        addData(it)
+                        viewModel.isAllDataNew = true
+                    }
                 }
             }
+
         }
 
         viewModel.progressBarMode.observe(viewLifecycleOwner) {

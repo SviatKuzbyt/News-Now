@@ -1,6 +1,7 @@
 package ua.sviatkuzbyt.newsnow.data.database
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
@@ -10,16 +11,9 @@ import ua.sviatkuzbyt.newsnow.dataStore
 import java.util.*
 
 class DataSetting(val context: Context) {
-    private val region = stringPreferencesKey("region")
-    private val language = stringPreferencesKey("language")
     private val regionCode = stringPreferencesKey("region_code")
-    private val languageCode = stringPreferencesKey("language_code")
+    private val searchInAllRegion = booleanPreferencesKey("search_all")
 
-    suspend fun getRegion():String{
-        return  context.dataStore.data.map {
-            it[region] ?: context.getString(R.string.system)
-        }.first()
-    }
 
     suspend fun getRegionCode():String{
         return context.dataStore.data.map {
@@ -27,22 +21,22 @@ class DataSetting(val context: Context) {
         }.first()
     }
 
-    suspend fun getLanguage():String{
-        return  context.dataStore.data.map {
-            it[language] ?: context.getString(R.string.all)
+    suspend fun getSearchAll(): Boolean{
+        return context.dataStore.data.map {
+            it[searchInAllRegion] ?: true
         }.first()
     }
 
-    suspend fun getLanguageCode():String{
-        return  context.dataStore.data.map {
-            it[languageCode] ?: ""
-        }.first()
-    }
-
-    suspend fun setValue(value: String, key: String, code: String,  keyShort: String) {
+    suspend fun setRegion(code: String) {
         context.dataStore.edit { settings ->
-            settings[stringPreferencesKey(key)] = value
-            settings[stringPreferencesKey(keyShort)] = code
+            settings[regionCode] = code
         }
     }
+
+    suspend fun setSearchInAll(param: Boolean) {
+        context.dataStore.edit { settings ->
+            settings[searchInAllRegion] = param
+        }
+    }
+
 }

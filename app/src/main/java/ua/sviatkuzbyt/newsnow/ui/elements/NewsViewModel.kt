@@ -14,7 +14,7 @@ open class NewsViewModel(application: Application): AndroidViewModel(application
 
     fun addSavedNews(item: NewsList){
         viewModelScope.launch(Dispatchers.IO){
-            savedNewsRepository.addSavedNews(item)
+            savedNewsRepository.add(item)
         }
     }
 

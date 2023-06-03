@@ -2,6 +2,7 @@ package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -25,6 +26,7 @@ open class NewsLoad(private val dataBaseRepository: DataBaseRepository) {
     }
 
     suspend fun getListFromUrl(link: String): NewsContainer {
+        Log.v("apptest", link)
         val urlResult = URL(link).readText()
         val list = jsonConvert(urlResult)
         val nextPage = getNextPage(urlResult)

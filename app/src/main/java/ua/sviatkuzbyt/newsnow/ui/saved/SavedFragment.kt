@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.databinding.FragmentSavedBinding
+import ua.sviatkuzbyt.newsnow.ui.SharedData
 import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
 
 class SavedFragment : Fragment(R.layout.fragment_saved) {
-
 
     private lateinit var binding: FragmentSavedBinding
     private val viewModel: SavedViewModel by viewModels()
@@ -24,16 +24,23 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
         binding.recycleViewSaved.adapter = recyclerAdapter
 
         viewModel.savedList.observe(viewLifecycleOwner){
-            if(viewModel.allUpdate)
+            val deleteItem = viewModel.deleteItem
+            if(deleteItem == -1){
                 recyclerAdapter.updateData(it)
-            else{
-                recyclerAdapter.notifyItemRemoved(viewModel.deleteItem)
-                recyclerAdapter.notifyItemRangeChanged(viewModel.deleteItem,
-                    recyclerAdapter.itemCount-viewModel.deleteItem)
-                viewModel.allUpdate = true
+                binding.textNoSaved.visibility = View.GONE
             }
-        }
 
-        viewModel.loadSavedList()
+            else {
+                recyclerAdapter.notifyItemRemoved(deleteItem)
+                recyclerAdapter.notifyItemRangeChanged(deleteItem,
+                    recyclerAdapter.itemCount-deleteItem)
+            }
+            if(it.isEmpty())
+                binding.textNoSaved.visibility = View.VISIBLE
+
+            viewModel.deleteItem = -1
+        }
+        if(SharedData.isChangeSaved)
+            viewModel.loadSavedList()
     }
 }

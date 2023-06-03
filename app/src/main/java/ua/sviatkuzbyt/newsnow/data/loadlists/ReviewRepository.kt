@@ -3,6 +3,7 @@ package ua.sviatkuzbyt.newsnow.data.loadlists
 import ua.sviatkuzbyt.newsnow.data.database.DataSetting
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
+import ua.sviatkuzbyt.newsnow.ui.SharedData
 
 class ReviewRepository(
     dataBaseRepository: DataBaseRepository,
@@ -15,8 +16,10 @@ class ReviewRepository(
     private var nextPage = ""
 
     private suspend fun setRegion(){
-        if(region.isEmpty())
+        if(region.isEmpty() || SharedData.isChangeRegion){
             region = "&country=" + dataSetting.getRegionCode()
+            SharedData.isChangeRegion = false
+        }
     }
 
     suspend fun loadNewList(): MutableList<NewsList>{

@@ -27,7 +27,7 @@ internal class DataBaseRepositoryTest{
 
     @Test
     fun addSaveNews(){
-        dataBaseRepository.addSavedNews(news)
+        dataBaseRepository.add(news)
         val lastElementInDB = dataBaseRepository.getSavedNews()[0]
         Assert.assertEquals(news.label, lastElementInDB.label)
     }

@@ -18,5 +18,5 @@ data class SettingKey(
 
 data class SettingValues(
     val value: String,
-    val valueShort: String
+    val code: String
 )

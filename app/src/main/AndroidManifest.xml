@@ -16,7 +16,7 @@
         android:theme="@style/Theme.NewsNow"
         tools:targetApi="31">
         <activity
-            android:name=".ui.setting.SettingValuesActivity"
+            android:name=".ui.setting.ChooseSettingActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

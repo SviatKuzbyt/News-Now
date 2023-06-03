@@ -11,88 +11,67 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleSetting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/ic_next"
+            app:layout_constraintBottom_toBottomOf="@+id/textRegion"
+            app:layout_constraintEnd_toEndOf="@+id/textRegion"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textLabelInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/inter_bold"
-            android:text="@string/information_label"
-            android:textColor="?colorPrimary"
-            android:textSize="20sp"
+            android:id="@+id/textRegion"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/region"
+            android:textAppearance="@style/GeneralText"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_vertical"/>
 
         <View
-            android:id="@+id/divider"
+            android:id="@+id/divider2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="?dividerColor"
+            android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycleSetting" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-        <TextView
-            android:id="@+id/testInformation"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:fontFamily="@font/inter"
-            android:text="@string/information_content"
-            android:textColor="?colorOnPrimary"
-            android:textSize="16sp"
+            android:paddingStart="8dp"
+            android:text="@string/search_in_all_region"
+            android:textAppearance="@style/GeneralText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLabelInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/textRegion"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/information_content_two"
-            android:fontFamily="@font/inter"
-            android:textSize="16sp"
-            android:textColor="?colorOnPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/testInformation" />
-
-        <TextView
-            android:id="@+id/textLinks"
+            android:id="@+id/textAbout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/inter"
-            android:text="@string/links"
-            android:textColor="#0277BD"
+            android:text="@string/about"
+            android:textColor="?colorOnPrimary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:ignore="TextContrastCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

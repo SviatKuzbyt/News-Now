@@ -14,7 +14,6 @@ import ua.sviatkuzbyt.newsnow.ui.elements.NewsViewModel
 
 //level-up vars
 val Context.dataStore by preferencesDataStore(name = "settings")
-var changeSaves = true
 
 class MainActivity : AppCompatActivity() {
 

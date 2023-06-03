@@ -1,12 +1,12 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
+import ua.sviatkuzbyt.newsnow.data.database.DataSetting
 import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
@@ -19,13 +19,21 @@ class SearchViewModel(private val application: Application): NewsViewModel(appli
     var progressBarMode = MutableLiveData<ProgressBarMode>()
     var isAllDataNew = true
 
-    val dataBaseRepository = DataBaseRepository(application) //temp
-    private val repository = SearchRepository(dataBaseRepository)
+    val dataBaseRepository = DataBaseRepository(application)
+    val dataSetting = DataSetting(application)
+    private val repository = SearchRepository(dataBaseRepository, dataSetting)
     private var loadNews: Job? = null
 
     init {
-        Log.v("apptest", test)
+        setRegion()
     }
+
+    fun setRegion(){
+        viewModelScope.launch{
+            repository.setCountry(dataSetting.getSearchAll())
+        }
+    }
+
     fun loadNewNews(request: String) {
         cancelAndLoadNews {
             progressBarMode.postValue(ProgressBarMode.LoadNew)

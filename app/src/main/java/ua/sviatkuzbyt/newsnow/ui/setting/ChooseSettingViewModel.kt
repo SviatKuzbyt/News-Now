@@ -1,26 +1,39 @@
-package ua.sviatkuzbyt.newsnow.data.other
+package ua.sviatkuzbyt.newsnow.ui.setting
 
-import android.content.Context
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.R
+import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.SettingValues
+import ua.sviatkuzbyt.newsnow.ui.SharedData
 import java.util.*
 
-class SettingRepository(context: Context) {
-    val listLanguage = listOf(
-        SettingValues(context.getString(R.string.all), ""),
-        SettingValues("English", "en"),
-        SettingValues("Español", "es"),
-        SettingValues("Français", "fr"),
-        SettingValues("Polski", "pl"),
-        SettingValues("Português", "pt"),
-        SettingValues("Українська", "uk"),
-        SettingValues("한국어", "ko"),
-        SettingValues("中国人", "ja"),
-        SettingValues("日本", "zh")
-    )
+class ChooseSettingViewModel(application: Application): AndroidViewModel(application){
+    private val dataSetting = DataSetting(application)
+    var currentRegion = MutableLiveData<String>()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO){
+            currentRegion.postValue(dataSetting.getRegionCode())
+        }
+    }
+
+    fun setRegionAndFinish(code: String){
+        SharedData.isChangeRegion = true
+        viewModelScope.launch(Dispatchers.IO){
+            dataSetting.setRegion(code)
+            currentRegion.postValue("finish")
+        }
+    }
+
 
     val listRegion by lazy {
         listOf(
-            SettingValues(context.getString(R.string.system), Locale.getDefault().country),
+            SettingValues(application.getString(R.string.system), Locale.getDefault().country),
             SettingValues("Argentina", "ar"),
             SettingValues("Australia", "au"),
             SettingValues("Austria", "at"),
@@ -104,3 +117,42 @@ class SettingRepository(context: Context) {
         )
     }
 }
+
+//class SettingValuesViewModel(application: Application): AndroidViewModel(application) {
+//
+//    /**    VARIABLES    */
+//    //repositories
+//    private val repository: SettingRepository = SettingRepository(application)
+//
+//
+//    val context = application
+//    private var _valuesList = emptyList<SettingValues>()
+//    //observes values
+//    val valuesList = MutableLiveData(_valuesList)
+//    val finish = MutableLiveData<Boolean>()
+//
+//    /**    PUBLIC FUNCTIONS    */
+//
+//    //get list of language from setting db
+//    fun loadLanguagesList(){
+//        _valuesList = repository.listLanguage
+//        valuesList.value = _valuesList
+//    }
+//
+//    //get list of region from setting db
+//    fun loadRegionsList(){
+//        _valuesList = repository.listRegion
+//        valuesList.value = _valuesList
+//    }
+//
+//    //set value in setting db
+//    fun updateKey(value: String, key: String, code: String, keyShort: String){
+//        viewModelScope.launch {
+//            dataSetting.setValue(value, key, code, keyShort)
+//
+//            finish.postValue(true)
+//        }
+//    }
+//
+//
+//}
