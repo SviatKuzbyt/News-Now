@@ -10,7 +10,6 @@
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:statusBarColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Main.Toolbar"
         app:layout_constraintEnd_toEndOf="parent"

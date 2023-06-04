@@ -6,20 +6,18 @@
     <string name="setting">Paramètre</string>
     <string name="internet_error">Erreur de chargement, réessayez plus tard</string>
     <string name="search_hint">Saisissez une requête de recherche…</string>
-    <string name="search_result">Résultats</string>
-    <string name="searching">Recherche…</string>
     <string name="no_results">Aucun résultat</string>
     <string name="no_more_result">Plus de résultat</string>
-    <string name="wait">S\'il vous plaît, attendez</string>
     <string name="system">Système</string>
-    <string name="language_select">Choisir la langue</string>
     <string name="region_select">Choisissez une région</string>
-    <string name="language">Langue de recherche</string>
-    <string name="all">Tout</string>
     <string name="region">Région</string>
-    <string name="defaultValue">Défaut</string>
-    <string name="information_content">News Now est une application permettant de consulter les dernières actualités du monde entier. De plus, il fournit un service de recherche et d\'enregistrement d\'articles</string>
-    <string name="information_content_two">Demande de démonstration. Sviat Kuzbyt. novembre 2022</string>
-    <string name="information_label">Informations</string>
     <string name="no_saved">Il n\'y a pas de nouvelles enregistrées</string>
+    <string name="undo">Dos</string>
+    <string name="close">Fermer</string>
+    <string name="image">Image pour les nouvelles</string>
+    <string name="save_news">Enregistrer les nouvelles pour plus tard</string>
+    <string name="share">Partager des nouvelles</string>
+    <string name="search_in_all_region">Rechercher dans toutes les régions</string>
+    <string name="about">News Now est une application permettant de consulter les dernières actualités du monde entier. En outre, il fournit un service de recherche et d\'enregistrement d\'articles \n\nApplication de démonstration. Sviat Kuzbyt. Novembre 2022 (mis à jour en juin 2023)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app">App pour cela introuvable</string>
 </resources>

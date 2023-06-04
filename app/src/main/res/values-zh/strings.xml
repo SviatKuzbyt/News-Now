@@ -6,20 +6,18 @@
     <string name="setting">环境</string>
     <string name="internet_error">加载错误，稍后再试</string>
     <string name="search_hint">输入搜索查询...</string>
-    <string name="search_result">结果</string>
-    <string name="searching">正在搜索…</string>
     <string name="no_results">没有结果</string>
     <string name="no_more_result">没有更多的结果</string>
-    <string name="wait">请稍等</string>
     <string name="system">系统</string>
-    <string name="language_select">选择语言</string>
     <string name="region_select">选择区域</string>
-    <string name="language">搜索语言</string>
-    <string name="all">全部</string>
     <string name="region">地区</string>
-    <string name="defaultValue">默认</string>
-    <string name="information_content">News Now 是一款用于查看全球最新时事新闻的应用程序。 此外，它还提供搜索和保存文章的服务</string>
-    <string name="information_content_two">演示应用程序。 斯维亚特·库兹比特。 2022 年 11 月</string>
-    <string name="information_label">信息</string>
     <string name="no_saved">没有保存的新闻</string>
+    <string name="undo">后退</string>
+    <string name="close">关闭</string>
+    <string name="image">新闻图片</string>
+    <string name="save_news">保存新闻以备后用</string>
+    <string name="share">分享新闻</string>
+    <string name="search_in_all_region">在所有地区搜索</string>
+    <string name="about">News Now 是一款用于查看全球最新时事新闻的应用程序。 此外，它还提供搜索和保存文章的服务\n\nDemo 应用程序。 斯维亚特·库兹比特。 2022 年 11 月（2023 年 6 月更新)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app">找不到它的应用程序</string>
 </resources>

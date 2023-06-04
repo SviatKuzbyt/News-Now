@@ -6,20 +6,18 @@
     <string name="setting">Налаштування</string>
     <string name="internet_error">Помилка завантаження, спробуйте пізніше</string>
     <string name="search_hint">Введіть пошуковий запит…</string>
-    <string name="search_result">Результати</string>
-    <string name="searching">Пошук…</string>
     <string name="no_results">Немає результатів</string>
     <string name="no_more_result">Немає більше результатів</string>
-    <string name="wait">Будь ласка зачекайте</string>
     <string name="system">Система</string>
-    <string name="language_select">Виберіть мову</string>
     <string name="region_select">Виберіть регіон</string>
-    <string name="language">Мова пошуку</string>
-    <string name="all">Всі</string>
     <string name="region">Регіон</string>
-    <string name="defaultValue">За замовчуванням</string>
-    <string name="information_content">News Now - додаток для перегляду останніх, актуальних новин по всьому світу. Крім того, надає послугу пошуку та збереження статтей</string>
-    <string name="information_content_two">Демонстраційний додаток. Sviat Kuzbyt. Листопад 2022</string>
-    <string name="information_label">Інформація</string>
     <string name="no_saved">Немає збережених новин</string>
+    <string name="undo">Назад</string>
+    <string name="close">Закрити</string>
+    <string name="image">Фото новин</string>
+    <string name="save_news">Зберегти новину на потім</string>
+    <string name="share">Поділитися новиною</string>
+    <string name="search_in_all_region">Пошук у всіх регіонах</string>
+    <string name="no_app">Програму для дії не знайдено</string>
+    <string name="about">News Now - додаток для перегляду останніх, актуальних новин по всьому світу. Крім того, надає послугу пошуку та збереження статтей\n\nДемонстраційний додаток. Sviat Kuzbyt. Листопад 2022\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
 </resources>

@@ -16,4 +16,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Main.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textColorPrimary">@color/blue</item>
+        <item name="android:background">@color/dark_background</item>
+    </style>
+
 </resources>

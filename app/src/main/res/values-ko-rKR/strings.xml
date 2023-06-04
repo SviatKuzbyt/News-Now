@@ -6,20 +6,18 @@
     <string name="setting">환경</string>
     <string name="internet_error">로드 오류, 나중에 시도</string>
     <string name="search_hint">검색어를 입력하세요...</string>
-    <string name="search_result">결과</string>
-    <string name="searching">수색…</string>
     <string name="no_results">결과 없음</string>
     <string name="no_more_result">더 이상 결과 없음</string>
-    <string name="wait">기다리세요</string>
     <string name="system">체계</string>
-    <string name="language_select">언어 선택</string>
     <string name="region_select">지역 선택</string>
-    <string name="language">검색 언어</string>
-    <string name="all">모두</string>
     <string name="region">지역</string>
-    <string name="defaultValue">기본</string>
-    <string name="information_content">News Now는 전 세계의 최신 뉴스를 볼 수 있는 애플리케이션입니다. 또한 기사를 검색하고 저장할 수 있는 서비스를 제공합니다.</string>
-    <string name="information_content_two">데모 신청. Sviat Kuzbyt. 2022년 11월</string>
-    <string name="information_label">정보</string>
     <string name="no_saved">저장된 뉴스가 없습니다</string>
+    <string name="undo">뒤쪽에</string>
+    <string name="close">닫다</string>
+    <string name="image">뉴스용 이미지</string>
+    <string name="save_news">나중을 위해 뉴스 저장</string>
+    <string name="share">뉴스 공유</string>
+    <string name="search_in_all_region">모든 지역에서 검색</string>
+    <string name="about">News Now는 전 세계의 최신 뉴스를 볼 수 있는 애플리케이션입니다. 또한 기사를 검색하고 저장할 수 있는 서비스를 제공합니다. \n\nSviat Kuzbyt. 2022년 11월(2023년 6월 업데이트)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app">해당 앱을 찾을 수 없음</string>
 </resources>

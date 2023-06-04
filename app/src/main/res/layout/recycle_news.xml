@@ -32,9 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter"
-        android:textColor="?colorOnSecondary"
-        android:textSize="12sp"
+        android:textAppearance="@style/SecondaryText"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,10 +41,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter"
         android:minHeight="75dp"
-        android:textColor="?colorOnPrimary"
-        android:textSize="16sp"
+        android:textAppearance="@style/GeneralText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
         app:layout_constraintTop_toBottomOf="@+id/sourceNewsRecycle" />
@@ -56,9 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/inter"
-        android:textColor="?colorOnSecondary"
-        android:textSize="12sp"
+        android:textAppearance="@style/SecondaryText"
         app:layout_constraintBottom_toBottomOf="@+id/shareNewsRecycle"
         app:layout_constraintStart_toEndOf="@+id/cardViewRecycle"
         app:layout_constraintTop_toTopOf="@+id/shareNewsRecycle" />

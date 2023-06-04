@@ -6,20 +6,18 @@
     <string name="setting">Ustawienie</string>
     <string name="internet_error">Błąd ładowania, spróbuj później</string>
     <string name="search_hint">Wpisz zapytanie wyszukiwania…</string>
-    <string name="search_result">Wyniki</string>
-    <string name="searching">Badawczy…</string>
     <string name="no_results">Brak wyników</string>
     <string name="no_more_result">Brak wyników</string>
-    <string name="wait">Proszę czekać</string>
     <string name="system">System</string>
-    <string name="language_select">Wybierz język</string>
     <string name="region_select">Wybierz region</string>
-    <string name="language">Język wyszukiwania</string>
-    <string name="all">Wszystko</string>
     <string name="region">Region</string>
-    <string name="defaultValue">Domyślna</string>
-    <string name="information_content">News Now to aplikacja do przeglądania najnowszych, aktualnych wiadomości z całego świata. Ponadto udostępnia usługę wyszukiwania i zapisywania artykułów</string>
-    <string name="information_content_two">Aplikacja demonstracyjna. Świat Kuzbyt. listopad 2022 r</string>
-    <string name="information_label">Informacja</string>
     <string name="no_saved">Brak zapisanych wiadomości</string>
+    <string name="undo">Z powrotem</string>
+    <string name="close">Zamknąć</string>
+    <string name="image">Obraz dla wiadomości</string>
+    <string name="save_news">Zachowaj wiadomości na później</string>
+    <string name="share">Podziel się wiadomościami</string>
+    <string name="search_in_all_region">Szukaj we wszystkich regionach</string>
+    <string name="about">News Now to aplikacja do przeglądania najnowszych, aktualnych wiadomości z całego świata. Dodatkowo udostępnia usługę wyszukiwania i zapisywania artykułów \n\nAplikacja Demo. Świat Kuzbyt. listopad 2022 r. (aktualizacja w czerwcu 2023 r.)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app">Aplikacja do tego nie została znaleziona</string>
 </resources>

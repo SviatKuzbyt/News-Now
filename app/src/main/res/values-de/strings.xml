@@ -6,20 +6,18 @@
     <string name="setting">Einstellung</string>
     <string name="internet_error">Ladefehler, versuchen Sie es später</string>
     <string name="search_hint">Geben Sie eine Suchanfrage ein…</string>
-    <string name="search_result">Ergebnisse</string>
-    <string name="searching">Suche…</string>
     <string name="no_results">Keine Ergebnisse</string>
     <string name="no_more_result">Kein Ergebnis mehr</string>
-    <string name="wait">Warten Sie mal</string>
     <string name="system">System</string>
-    <string name="language_select">Sprache auswählen</string>
     <string name="region_select">Region wählen</string>
-    <string name="language">Sprache für die Suche</string>
-    <string name="all">Alle</string>
     <string name="region">Region</string>
-    <string name="defaultValue">Standard</string>
-    <string name="information_content">News Now ist eine Anwendung zum Anzeigen der neuesten, aktuellen Nachrichten aus der ganzen Welt. Darüber hinaus bietet es einen Service zum Suchen und Speichern von Artikeln</string>
-    <string name="information_content_two">Demo-Anwendung. Sviat Kuzbyt. November 2022</string>
-    <string name="information_label">Information</string>
     <string name="no_saved">Es sind keine Nachrichten gespeichert</string>
+    <string name="undo">Zurück</string>
+    <string name="close">Schließen</string>
+    <string name="image">Bild für Neuigkeiten</string>
+    <string name="save_news">Nachrichten für später speichern</string>
+    <string name="share">Neuigkeiten teilen</string>
+    <string name="search_in_all_region">Suche in allen Regionen</string>
+    <string name="about">News Now ist eine Anwendung zum Anzeigen der neuesten und aktuellen Nachrichten aus der ganzen Welt. Darüber hinaus bietet es einen Dienst zum Suchen und Speichern von Artikeln.\n\nDemo-Anwendung. Sviat Kuzbyt. November 2022 (aktualisiert im Juni 2023)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app">App dafür nicht gefunden</string>
 </resources>

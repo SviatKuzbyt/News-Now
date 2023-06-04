@@ -13,7 +13,6 @@ class DataBaseRepository(context: Context) {
     }
 
     fun add(item: NewsList){
-        SharedData.isChangeSaved = true
         dao.addSaveNews(
             SavedNewsEntity(
                 0,
@@ -26,7 +25,6 @@ class DataBaseRepository(context: Context) {
     }
 
     fun remove(item: String){
-        SharedData.isChangeSaved = true
         dao.deleteSaveNews(item)
     }
 
