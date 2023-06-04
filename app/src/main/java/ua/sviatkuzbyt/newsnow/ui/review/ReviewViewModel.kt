@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.ui.elements.NewsViewModel
@@ -19,13 +19,9 @@ class ReviewViewModel (private val application: Application): NewsViewModel(appl
     var progressBarMode = MutableLiveData<ProgressBarMode>()
     var isAllDataNew = true
 
-    private val dataSetting = DataSetting(application) //temp
-    private val repository = ReviewRepository(savedNewsRepository, dataSetting)
+    private val repository = ReviewRepository(savedNewsRepository, DataSetting(application))
 
-    init {
-        loadNewNews()
-        test = "dasfdsfdfs"
-    }
+    init { loadNewNews() }
 
     fun loadNewNews() = viewModelScope.launch(Dispatchers.IO + handleException()){
         progressBarMode.postValue(ProgressBarMode.LoadNew)

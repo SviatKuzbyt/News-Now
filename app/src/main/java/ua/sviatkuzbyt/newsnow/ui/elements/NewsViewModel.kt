@@ -10,7 +10,6 @@ import ua.sviatkuzbyt.newsnow.data.other.NewsList
 
 open class NewsViewModel(application: Application): AndroidViewModel(application) {
     val savedNewsRepository = DataBaseRepository(application)
-    var test = ""
 
     fun addSavedNews(item: NewsList){
         viewModelScope.launch(Dispatchers.IO){

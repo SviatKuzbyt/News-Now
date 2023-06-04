@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 
 class SettingViewModel(application: Application): AndroidViewModel(application) {
     private val dataSetting = DataSetting(application)

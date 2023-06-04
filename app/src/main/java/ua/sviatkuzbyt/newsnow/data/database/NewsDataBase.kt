@@ -1,11 +1,13 @@
-package ua.sviatkuzbyt.newsnow.data.database.room
+package ua.sviatkuzbyt.newsnow.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(version = 1, entities = [SavedNewsEntity::class, HistoryEntity::class], exportSchema = false)
+@Database(version = 2, entities = [SavedNewsEntity::class], exportSchema = false)
 abstract class NewsDataBase : RoomDatabase() {
     abstract fun dao(): NewsDataBaseDao
 
@@ -19,7 +21,12 @@ abstract class NewsDataBase : RoomDatabase() {
 
         private fun buildDatabase(context: Context): NewsDataBase {
             return Room.databaseBuilder(context, NewsDataBase::class.java, "movies-db")
+                .addMigrations(MIGRATION_1_2)
                 .build()
+        }
+
+        private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {}
         }
     }
 }

@@ -33,4 +33,5 @@
     <string name="delete_saved" translatable="false">Delete saved news</string>
     <string name="search_in_all_region" translatable="false">Пошук у всіх регіонах</string>
     <string name="about" translatable="false">News Now is an application for viewing the latest, current news around the world. In addition, it provides a service for searching and saving articles\n\nDemo application. Sviat Kuzbyt. November 2022 (updated in June 2023)\n\n<a href="https://github.com/SviatKuzbyt/News-Now">Git Hub</a>\n<a href="https://newsdata.io/">NewsData.IO - API</a>\n<a href="https://www.flaticon.com/">Flacticon - icons</a></string>
+    <string name="no_app" translatable="false"> App for it don\'t found</string>
 </resources>

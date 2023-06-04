@@ -1,42 +1,72 @@
 package ua.sviatkuzbyt.newsnow.ui.search
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.databinding.FragmentSearchBinding
+import ua.sviatkuzbyt.newsnow.ui.SharedData
 import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
-import ua.sviatkuzbyt.newsnow.ui.elements.hideKeyboardFrom
+import ua.sviatkuzbyt.newsnow.ui.elements.makeToast
 
-class SearchFragment : Fragment(R.layout.fragment_search){
+class SearchFragment : Fragment(R.layout.fragment_search) {
+
     private val viewModel: SearchViewModel by viewModels()
-    private lateinit var binding: FragmentSearchBinding
+    private var binding: FragmentSearchBinding? = null
     private lateinit var adapter: NewsListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSearchBinding.bind(view)
+        setupViews()
+        observeViewModel()
+        handleSearchConfigurationChange()
+    }
 
-        adapter = NewsListAdapter(mutableListOf(), requireContext(), false, viewModel)
-        binding.recycleSearch.layoutManager = LinearLayoutManager(requireContext())
-        binding.recycleSearch.adapter = adapter
+    private fun setupViews() {
+        binding?.apply {
+            recycleSearch.layoutManager = LinearLayoutManager(requireContext())
+            adapter = NewsListAdapter(mutableListOf(), requireContext(), false, viewModel)
+            recycleSearch.adapter = adapter
 
-        binding.editTextSearch.setOnEditorActionListener { textView, _, _ ->
-            viewModel.loadNewNews(textView.text.toString())
-            hideKeyboardFrom(activity, textView)
-            textView.clearFocus()
-            true
+            recycleSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+
+                    if (lastVisibleItemPosition == recyclerView.adapter?.itemCount?.minus(1)
+                        && viewModel.progressBarMode.value == ProgressBarMode.Nothing
+                    ) {
+                        viewModel.loadMoreNews()
+                    }
+                }
+            })
+
+            editTextSearch.setOnEditorActionListener { textView, _, _ ->
+                viewModel.loadNewNews(textView.text.toString())
+                hideKeyboardFrom(textView)
+                textView.clearFocus()
+                true
+            }
+
+            clearButton.setOnClickListener {
+                editTextSearch.setText("")
+            }
+
+            editTextSearch.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                clearButton.visibility = if (hasFocus) View.VISIBLE else View.GONE
+            }
         }
+    }
 
-        binding.clearButton.setOnClickListener {
-            binding.editTextSearch.setText("")
-        }
-
+    private fun observeViewModel() {
         viewModel.newsList.observe(viewLifecycleOwner) { list ->
             adapter.apply {
                 if (viewModel.isAllDataNew) updateData(list)
@@ -47,40 +77,30 @@ class SearchFragment : Fragment(R.layout.fragment_search){
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        viewModel.error.observe(viewLifecycleOwner) {
+            makeToast(activity, it)
         }
 
         viewModel.progressBarMode.observe(viewLifecycleOwner) { mode ->
-            when(mode) {
-                ProgressBarMode.Nothing -> {
-                    binding.progressBarSearch.visibility = View.INVISIBLE
-                }
-                else -> {
-                    binding.progressBarSearch.visibility = View.VISIBLE
-                }
-            }
+            binding?.progressBarSearch?.visibility =
+                if (mode == ProgressBarMode.Nothing) View.INVISIBLE else View.VISIBLE
         }
+    }
 
-        binding.editTextSearch.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            binding.clearButton.visibility = if (hasFocus) View.VISIBLE else View.GONE
+    private fun handleSearchConfigurationChange() {
+        if (SharedData.isChangeSearchConfiguration) {
+            viewModel.setRegion()
+            SharedData.isChangeSearchConfiguration = false
         }
+    }
 
-        binding.recycleSearch.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+    private fun hideKeyboardFrom(view: View) {
+        val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
-                if (
-                    lastVisibleItemPosition == recyclerView.adapter?.itemCount?.minus(1)
-                    && viewModel.progressBarMode.value == ProgressBarMode.Nothing
-                ) {
-                    viewModel.loadMoreNews()
-                }
-            }
-        })
-
-        viewModel.setRegion()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

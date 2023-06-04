@@ -9,7 +9,6 @@ import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.other.SettingValues
 import ua.sviatkuzbyt.newsnow.ui.setting.ChooseSettingViewModel
 
-
 class ChooseSettingAdapter(
     private val dataSet: List<SettingValues>,
     private val viewModel: ChooseSettingViewModel,
@@ -27,9 +26,7 @@ class ChooseSettingAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        //set data
         viewHolder.textSetting.text = dataSet[position].value
-
 
         if (dataSet[position].code == selectedCode)
             viewHolder.itemView.setBackgroundResource(R.drawable.search_background)
@@ -40,6 +37,5 @@ class ChooseSettingAdapter(
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 }

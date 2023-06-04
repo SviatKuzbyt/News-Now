@@ -12,12 +12,13 @@ import ua.sviatkuzbyt.newsnow.ui.elements.NewsListAdapter
 
 class SavedFragment : Fragment(R.layout.fragment_saved) {
 
-    private lateinit var binding: FragmentSavedBinding
+    private var _binding: FragmentSavedBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: SavedViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSavedBinding.bind(view)
+        _binding = FragmentSavedBinding.bind(view)
 
         val recyclerAdapter = NewsListAdapter(mutableListOf(), requireContext(), false, viewModel)
         binding.recycleViewSaved.layoutManager = LinearLayoutManager(activity)
@@ -25,22 +26,27 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
 
         viewModel.savedList.observe(viewLifecycleOwner){
             val deleteItem = viewModel.deleteItem
+
             if(deleteItem == -1){
                 recyclerAdapter.updateData(it)
                 binding.textNoSaved.visibility = View.GONE
             }
-
             else {
                 recyclerAdapter.notifyItemRemoved(deleteItem)
-                recyclerAdapter.notifyItemRangeChanged(deleteItem,
-                    recyclerAdapter.itemCount-deleteItem)
+                recyclerAdapter.notifyItemRangeChanged(deleteItem, recyclerAdapter.itemCount-deleteItem)
             }
             if(it.isEmpty())
                 binding.textNoSaved.visibility = View.VISIBLE
 
             viewModel.deleteItem = -1
         }
+
         if(SharedData.isChangeSaved)
             viewModel.loadSavedList()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

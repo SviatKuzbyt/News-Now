@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -23,23 +22,13 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
 ) : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageNewsImageView: ImageView
-        val sourceNewsTextView: TextView
-        val labelNewsTextView: TextView
-        val timeNewsTextView: TextView
-        val saveNewsButton: Button
-        val shareNewsButton: Button
-        val cardViewRecycle: CardView
-
-        init {
-            imageNewsImageView = view.findViewById(R.id.imageNewsRecycle)
-            sourceNewsTextView = view.findViewById(R.id.sourceNewsRecycle)
-            labelNewsTextView = view.findViewById(R.id.labelNewsRecycle)
-            timeNewsTextView = view.findViewById(R.id.timeNewsRecycle)
-            saveNewsButton = view.findViewById(R.id.saveNewsRecycle)
-            shareNewsButton = view.findViewById(R.id.shareNewsRecycle)
-            cardViewRecycle = view.findViewById(R.id.cardViewRecycle)
-        }
+        val imageNewsImageView: ImageView = view.findViewById(R.id.imageNewsRecycle)
+        val sourceNewsTextView: TextView  = view.findViewById(R.id.sourceNewsRecycle)
+        val labelNewsTextView: TextView = view.findViewById(R.id.labelNewsRecycle)
+        val timeNewsTextView: TextView = view.findViewById(R.id.timeNewsRecycle)
+        val saveNewsButton: Button = view.findViewById(R.id.saveNewsRecycle)
+        val shareNewsButton: Button = view.findViewById(R.id.shareNewsRecycle)
+        val cardViewRecycle: CardView = view.findViewById(R.id.cardViewRecycle)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -56,15 +45,14 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
         if (image == null) viewHolder.cardViewRecycle.visibility = View.GONE
         else viewHolder.imageNewsImageView.setImageBitmap(image)
 
-
         viewHolder.sourceNewsTextView.text = dataSet[position].source
         viewHolder.labelNewsTextView.text = dataSet[position].label
         viewHolder.timeNewsTextView.text = dataSet[position].time
 
-        val saveBackground =
+        viewHolder.saveNewsButton.setBackgroundResource(
             if (dataSet[position].isSaved) R.drawable.ic_saved_blue
             else R.drawable.ic_saved_gray
-        viewHolder.saveNewsButton.setBackgroundResource(saveBackground)
+        )
 
         viewHolder.itemView.setOnClickListener {
             try {
@@ -74,7 +62,7 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
                 )
                 ContextCompat.startActivity(context, urlIntent, null)
             } catch (e: Exception){
-                Toast.makeText(context, "App don't founded for this action", Toast.LENGTH_LONG).show()
+                makeToast(context, context.getString(R.string.no_app))
             }
         }
 
@@ -86,7 +74,7 @@ class NewsListAdapter(private var dataSet: MutableList<NewsList>,
                 }
                 ContextCompat.startActivity(context, shareIntent, null)
             } catch (e: Exception){
-                Toast.makeText(context, "App don't founded for this action", Toast.LENGTH_LONG).show()
+                makeToast(context, context.getString(R.string.no_app))
             }
         }
 

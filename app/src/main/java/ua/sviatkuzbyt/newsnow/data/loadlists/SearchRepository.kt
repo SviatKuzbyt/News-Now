@@ -2,7 +2,7 @@ package ua.sviatkuzbyt.newsnow.data.loadlists
 
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 
 class SearchRepository(
     dataBaseRepository: DataBaseRepository,
@@ -14,13 +14,15 @@ class SearchRepository(
     private var lastSearchText = ""
     private var country = ""
 
-    suspend fun setCountry(isAll: Boolean){
-        if(!isAll)
-            country = "&country=" + dataSetting.getRegionCode()
+    suspend fun setCountry(){
+        country = if(dataSetting.getSearchAll()) ""
+        else "&country=" + dataSetting.getRegionCode()
     }
 
     suspend fun loadNewList(searchText: String): MutableList<NewsList>{
         val news = getListFromUrl("$link&q=$searchText$country")
+        if(news.newsList.isEmpty())
+            throw Exception("No result")
         nextPage = "&page=" + news.nextPage
         lastSearchText = searchText
         return news.newsList

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.sviatkuzbyt.newsnow.R
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 import ua.sviatkuzbyt.newsnow.data.other.SettingValues
 import ua.sviatkuzbyt.newsnow.ui.SharedData
 import java.util.*
@@ -29,7 +29,6 @@ class ChooseSettingViewModel(application: Application): AndroidViewModel(applica
             currentRegion.postValue("finish")
         }
     }
-
 
     val listRegion by lazy {
         listOf(
@@ -117,42 +116,3 @@ class ChooseSettingViewModel(application: Application): AndroidViewModel(applica
         )
     }
 }
-
-//class SettingValuesViewModel(application: Application): AndroidViewModel(application) {
-//
-//    /**    VARIABLES    */
-//    //repositories
-//    private val repository: SettingRepository = SettingRepository(application)
-//
-//
-//    val context = application
-//    private var _valuesList = emptyList<SettingValues>()
-//    //observes values
-//    val valuesList = MutableLiveData(_valuesList)
-//    val finish = MutableLiveData<Boolean>()
-//
-//    /**    PUBLIC FUNCTIONS    */
-//
-//    //get list of language from setting db
-//    fun loadLanguagesList(){
-//        _valuesList = repository.listLanguage
-//        valuesList.value = _valuesList
-//    }
-//
-//    //get list of region from setting db
-//    fun loadRegionsList(){
-//        _valuesList = repository.listRegion
-//        valuesList.value = _valuesList
-//    }
-//
-//    //set value in setting db
-//    fun updateKey(value: String, key: String, code: String, keyShort: String){
-//        viewModelScope.launch {
-//            dataSetting.setValue(value, key, code, keyShort)
-//
-//            finish.postValue(true)
-//        }
-//    }
-//
-//
-//}

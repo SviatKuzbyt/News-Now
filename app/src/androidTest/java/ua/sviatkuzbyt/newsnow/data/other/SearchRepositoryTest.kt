@@ -1,13 +1,10 @@
 package ua.sviatkuzbyt.newsnow.data.other
 
-import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
-import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
 
 

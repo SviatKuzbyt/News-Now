@@ -6,7 +6,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.data.loadlists.ReviewRepository
 

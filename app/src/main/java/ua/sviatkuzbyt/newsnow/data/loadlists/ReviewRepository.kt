@@ -1,6 +1,6 @@
 package ua.sviatkuzbyt.newsnow.data.loadlists
 
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
 import ua.sviatkuzbyt.newsnow.ui.SharedData

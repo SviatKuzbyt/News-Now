@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data.database.room
+package ua.sviatkuzbyt.newsnow.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

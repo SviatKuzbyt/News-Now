@@ -1,4 +1,4 @@
-package ua.sviatkuzbyt.newsnow.data.database
+package ua.sviatkuzbyt.newsnow.data.other
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -6,14 +6,12 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.dataStore
 import java.util.*
 
 class DataSetting(val context: Context) {
     private val regionCode = stringPreferencesKey("region_code")
     private val searchInAllRegion = booleanPreferencesKey("search_all")
-
 
     suspend fun getRegionCode():String{
         return context.dataStore.data.map {
@@ -38,5 +36,4 @@ class DataSetting(val context: Context) {
             settings[searchInAllRegion] = param
         }
     }
-
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import ua.sviatkuzbyt.newsnow.R
 import ua.sviatkuzbyt.newsnow.data.database.DataBaseRepository
-import ua.sviatkuzbyt.newsnow.data.database.DataSetting
+import ua.sviatkuzbyt.newsnow.data.other.DataSetting
 import ua.sviatkuzbyt.newsnow.data.loadlists.SearchRepository
 import ua.sviatkuzbyt.newsnow.data.other.NewsList
 import ua.sviatkuzbyt.newsnow.ui.elements.ProgressBarMode
@@ -19,36 +19,30 @@ class SearchViewModel(private val application: Application): NewsViewModel(appli
     var progressBarMode = MutableLiveData<ProgressBarMode>()
     var isAllDataNew = true
 
-    val dataBaseRepository = DataBaseRepository(application)
-    val dataSetting = DataSetting(application)
-    private val repository = SearchRepository(dataBaseRepository, dataSetting)
+    private val repository = SearchRepository(DataBaseRepository(application), DataSetting(application))
     private var loadNews: Job? = null
 
-    init {
-        setRegion()
-    }
+    init { setRegion() }
 
     fun setRegion(){
         viewModelScope.launch{
-            repository.setCountry(dataSetting.getSearchAll())
+            repository.setCountry()
         }
     }
 
     fun loadNewNews(request: String) {
         cancelAndLoadNews {
             progressBarMode.postValue(ProgressBarMode.LoadNew)
-            val list = repository.loadNewList(request)
-            newsList.postValue(list)
+            newsList.postValue(repository.loadNewList(request))
         }
     }
 
     fun loadMoreNews() {
         cancelAndLoadNews {
             progressBarMode.postValue(ProgressBarMode.LoadMore)
-            val list = repository.loadMoreListList(newsList.value!!)
-            progressBarMode.postValue(ProgressBarMode.Nothing)
             isAllDataNew = false
-            newsList.postValue(list)
+            newsList.postValue(repository.loadMoreListList(newsList.value!!))
+            progressBarMode.postValue(ProgressBarMode.Nothing)
         }
     }
 
@@ -64,8 +58,11 @@ class SearchViewModel(private val application: Application): NewsViewModel(appli
         return CoroutineExceptionHandler { _, throwable ->
             progressBarMode.postValue(ProgressBarMode.Nothing)
             val message =
-                if(throwable.message == "No more result") application.getString(R.string.no_more_result)
-                else application.getString(R.string.internet_error)
+                when (throwable.message) {
+                    "No more result" -> application.getString(R.string.no_more_result)
+                    "No result" -> application.getString(R.string.no_results)
+                    else -> application.getString(R.string.internet_error)
+                }
             error.postValue(message)
         }
     }
