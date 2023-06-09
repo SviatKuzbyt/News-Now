@@ -18,4 +18,4 @@ Application for viewing news from around the world. You can browse the latest ne
 
 
 ## How to install?
-Go to the latest [Release](https://github.com/SviatKuzbyt/News-Now/releases/tag/1.1) and download and install the file 'app-release.apk' pk'
+Go to the latest [Release](https://github.com/SviatKuzbyt/News-Now/releases/tag/1.1) and download and install the file `app-release.apk`
