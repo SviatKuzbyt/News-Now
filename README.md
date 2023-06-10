@@ -8,6 +8,7 @@ Application for viewing news from around the world. You can browse the latest ne
   - **Saved** - it contains all the saved news that you can then view
   - **Settings** - here you can select the region and search options
 - News provided by API [Newsdata.io](https://newsdata.io/)
+- There is a dark theme and supporting 10 languages
 - **Structure**
   - The program consists of MainActivity where ToolBar, BottomNavigationView and Fragment are placed where tabs are placed
   - I used the recommended architecture in the design, so all fragments work through ViewModel
